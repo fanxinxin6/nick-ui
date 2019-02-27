@@ -2,7 +2,18 @@
   <div id="app">
     <div>
       asdf
-      <ui-button></ui-button>
+      <ui-button>
+        按钮
+      </ui-button>
+      <ui-button size="small">
+        按钮
+        <div slot="effect">123
+          <div>456</div>
+        </div>
+      </ui-button>
+      <ui-button size="large">
+        按钮
+      </ui-button>
       <ui-button-group></ui-button-group>
       <ui-radio></ui-radio>
       <ui-radio-group></ui-radio-group>

@@ -1,0 +1,8 @@
+@keyframes effect-fade-in{
+
+}
+@keyframes effect-fade-out{
+    100%{
+        opacity: 0;
+    }
+}

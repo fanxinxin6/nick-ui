@@ -1,3 +1,67 @@
-.button(){
-
+.button() {
+  outline: 0;
+  cursor: pointer;
+  color: #000;
+  position: relative;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+.button-wrapper() {
+  &-wrapper {
+    height: 100%;
+    border-radius: inherit;
+    position: relative;
+  }
+}
+.button-effect() {
+  &-effect {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    position: absolute;
+    border:6px solid red;
+  }
+}
+.button-inner() {
+  &-inner {
+    position: relative;
+    border-radius: inherit;
+  }
+}
+.button-size() {
+  &-normal {
+    padding: 4px 32px;
+  }
+  &-small {
+    width: 114px;
+    height: 32px;
+  }
+  &-large {
+    width: 200px;
+    height: 40px;
+  }
+}
+.button-primary() {
+  &-primary {
+    color: #fff;
+    border-color: @button-primary-color;
+    &:enabled {
+      background-color: @button-primary-color;
+    }
+    &:hover {
+      background-color: @button-primary-color-hover;
+    }
+    &:focus {
+      background-color: @button-primary-color-hover;
+    }
+    &:active {
+      background-color: @button-primary-color-active;
+      .@{prefix}-button-effect{
+          animation: 0.5s effect-fade-out linear both;
+      }
+    }
+  }
 }
