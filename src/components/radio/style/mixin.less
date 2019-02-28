@@ -13,7 +13,7 @@
     position: relative;
     border: 1px solid transparent;
     background-color: transparent;
-    transition: background,border,color 0.3s;
+    transition:@transition-duration-base @transition-timing;
     &::before {
       content: "";
       width: 0;
@@ -37,8 +37,8 @@
     opacity: 0;
     border-radius: inherit;
     position: absolute;
-    background-color: @radio-primary-color-hover;
-    border: 6px solid @radio-primary-color-hover;
+    background-color: @primary-color-hover;
+    border: 6px solid @primary-color-hover;
   }
 }
 .radio-checked(){
@@ -88,38 +88,38 @@
       .@{prefix}-radio-wrapper {
         border-color: @border-color-base;
         &::before{
-          background-color: @radio-primary-color;
+          background-color: @primary-color-enabled;
         }
       }
       &:hover {
         .@{prefix}-radio-wrapper {
-          border-color: @radio-primary-color-hover;
+          border-color: @primary-color-hover;
         }
       }
       &:focus {
         .@{prefix}-radio-wrapper {
-          border-color: @radio-primary-color-hover;
+          border-color: @primary-color-focus;
         }
       }
       &:active {
         .@{prefix}-radio-wrapper {
-          border-color: @radio-primary-color-active;
+          border-color: @primary-color-active;
         }
       }
       &.@{prefix}-radio-clicked {
         .@{prefix}-radio-effect {
-          animation: 0.3s effect-zoom-in @animation-timing-effect,
-            0.3s effect-fade-out @animation-timing-effect;
+          animation: @animation-duration-base effect-zoom-in @animation-timing-effect,
+            @animation-duration-base effect-fade-out @animation-timing-effect;
         }
       }
     }
     &:disabled {
-      color: @radio-primary-color-disabled;
+      color: @primary-color-disabled;
       .@{prefix}-radio-wrapper {
-        border-color: @radio-primary-color-disabled-border;
-        background-color: @radio-primary-color-disabled-background;  
+        border-color: @primary-color-border-disabled;
+        background-color: @primary-color-background-disabled;  
         &::before{
-          background-color:  @radio-primary-color-disabled;
+          background-color:  @primary-color-disabled;
         }
       }
     }

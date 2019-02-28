@@ -5,6 +5,7 @@
   position: relative;
   border-radius: 6px;
   user-select: none;
+  transition:@transition-duration-base @transition-timing;
   background-color: transparent;
   border: 1px solid transparent;
 }
@@ -24,8 +25,8 @@
     opacity: 0;
     border-radius: inherit;
     position: absolute;
-    background-color: @button-primary-color-hover;
-    border: 6px solid @button-primary-color-hover;
+    background-color: @primary-color-hover;
+    border: 6px solid @primary-color-hover;
   }
 }
 .button-inner() {
@@ -74,27 +75,27 @@
   &-primary {
     &:enabled {
       color: #fff;
-      border-color: @button-primary-color;
-      background-color: @button-primary-color;
+      border-color: @primary-color-enabled;
+      background-color: @primary-color-enabled;
       &:hover {
-        background-color: @button-primary-color-hover;
+        background-color: @primary-color-hover;
       }
       &:focus {
-        background-color: @button-primary-color-hover;
+        background-color: @primary-color-focus;
       }
       &:active {
-        background-color: @button-primary-color-active;
+        background-color: @primary-color-active;
       }
       &.@{prefix}-button-clicked {
         .@{prefix}-button-effect {
-          animation: 0.3s effect-zoom-in @animation-timing-effect, 0.3s effect-fade-out @animation-timing-effect;
+          animation: @animation-duration-base effect-zoom-in @animation-timing-effect, @animation-duration-base effect-fade-out @animation-timing-effect;
         }
       }
     }
     &:disabled {
-      color: @button-primary-color-disabled;
-      border-color: @button-primary-color-disabled-border;
-      background-color: @button-primary-color-disabled-background;
+      color: @primary-color-disabled;
+      border-color: @primary-color-border-disabled;
+      background-color: @primary-color-background-disabled;
     }
   }
 }

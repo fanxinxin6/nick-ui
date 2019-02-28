@@ -19,7 +19,7 @@
       width: 5px;
       height: 9px;
       display: block;
-      border:2px solid transparent;
+      border: 2px solid transparent;
       border-left: 0;
       border-top: 0;
       margin-top: -2px;
@@ -38,15 +38,15 @@
     opacity: 0;
     border-radius: inherit;
     position: absolute;
-    background-color: @checkbox-primary-color-hover;
-    border: 6px solid @checkbox-primary-color-hover;
+    background-color: @primary-color-hover;
+    border: 6px solid @primary-color-hover;
   }
 }
-.checkbox-checked(){
-  &[checked]{ 
+.checkbox-checked() {
+  &[checked] {
     .@{prefix}-checkbox-wrapper {
-      &::before{
-       border-color: #fff;
+      &::before {
+        border-color: #fff;
       }
     }
   }
@@ -78,50 +78,52 @@
 }
 .checkbox-disabled() {
   &:disabled {
-    cursor: not-allowed;  
+    cursor: not-allowed;
   }
 }
 .checkbox-primary() {
   &-primary {
     &:enabled {
       .@{prefix}-checkbox-wrapper {
-        border-color: @border-color-base;
+        border-color: @primary-color-disabled;
       }
       &:hover {
         .@{prefix}-checkbox-wrapper {
-          border-color: @checkbox-primary-color-hover;
+          border-color: @primary-color-hover;
         }
       }
       &:focus {
         .@{prefix}-checkbox-wrapper {
-          border-color: @checkbox-primary-color-hover;
-        }
-      }
-      &[checked]{
-        .@{prefix}-checkbox-wrapper {
-          border-color: @checkbox-primary-color;
-          background-color: @checkbox-primary-color;
+          // 暂不启用focus状态
+          //border-color: @primary-color-focus;
         }
       }
       &:active {
         .@{prefix}-checkbox-wrapper {
-          border-color: @checkbox-primary-color-active;
+          border-color: @primary-color-active;
+        }
+      }
+      &[checked] {
+        .@{prefix}-checkbox-wrapper {
+          border-color: @primary-color-enabled;
+          background-color: @primary-color-enabled;
         }
       }
       &.@{prefix}-checkbox-clicked {
         .@{prefix}-checkbox-effect {
-          animation: 0.3s effect-zoom-in @animation-timing-effect,
-            0.3s effect-fade-out @animation-timing-effect;
+          animation: @animation-duration-base effect-zoom-in
+              @animation-timing-effect,
+            @animation-duration-base effect-fade-out @animation-timing-effect;
         }
       }
     }
     &:disabled {
-      color: @checkbox-primary-color-disabled;
+      color: @primary-color-disabled;
       .@{prefix}-checkbox-wrapper {
-        border-color: @checkbox-primary-color-disabled-border;
-        background-color: @checkbox-primary-color-disabled-background;  
-        &::before{
-          border-color:  @checkbox-primary-color-disabled;
+        border-color: @primary-color-border-disabled;
+        background-color: @primary-color-background-disabled;
+        &::before {
+          border-color: @primary-color-disabled;
         }
       }
     }
