@@ -1,3 +1,131 @@
-.switch(){
-
+.switch() {
+  outline: 0;
+  cursor: pointer;
+  color: #000;
+  position: relative;
+  border-radius: 6px;
+  user-select: none;
+  border: 0;
+}
+.switch-wrapper() {
+  &-wrapper {
+    border-radius: @border-radius-base;
+    position: relative;
+    border: 1px solid transparent;
+    background-color: transparent;
+    transition: @transition-duration-base @transition-timing;
+    &::before {
+      content: "";
+      width: 5px;
+      height: 9px;
+      display: block;
+      border: 2px solid transparent;
+      border-left: 0;
+      border-top: 0;
+      margin-top: -2px;
+      position: absolute;
+      transition: inherit;
+      transform: rotate(45deg);
+    }
+  }
+}
+.switch-effect() {
+  &-effect {
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    border-radius: inherit;
+    position: absolute;
+    background-color: @primary-color-hover;
+    border: 6px solid @primary-color-hover;
+  }
+}
+.switch-checked() {
+  &[checked] {
+    .@{prefix}-switch-wrapper {
+      &::before {
+        border-color: #fff;
+      }
+    }
+  }
+}
+.switch-inner() {
+  &-inner {
+    position: relative;
+  }
+}
+.switch-size() {
+  &-normal {
+    .@{prefix}-switch-wrapper {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &-small {
+    .@{prefix}-switch-wrapper {
+      width: 18px;
+      height: 18px;
+    }
+  }
+  &-large {
+    .@{prefix}-switch-wrapper {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+.switch-disabled() {
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+.switch-primary() {
+  &-primary {
+    &:enabled {
+      .@{prefix}-switch-wrapper {
+        border-color: @primary-color-disabled;
+      }
+      &:hover {
+        .@{prefix}-switch-wrapper {
+          border-color: @primary-color-hover;
+        }
+      }
+      &:focus {
+        .@{prefix}-switch-wrapper {
+          // 暂不启用focus状态
+          //border-color: @primary-color-focus;
+        }
+      }
+      &:active {
+        .@{prefix}-switch-wrapper {
+          border-color: @primary-color-active;
+        }
+      }
+      &[checked] {
+        .@{prefix}-switch-wrapper {
+          border-color: @primary-color-enabled;
+          background-color: @primary-color-enabled;
+        }
+      }
+      &.@{prefix}-switch-clicked {
+        .@{prefix}-switch-effect {
+          animation: @animation-duration-base effect-zoom-in
+              @animation-timing-effect,
+            @animation-duration-base effect-fade-out @animation-timing-effect;
+        }
+      }
+    }
+    &:disabled {
+      color: @primary-color-disabled;
+      .@{prefix}-switch-wrapper {
+        border-color: @primary-color-border-disabled;
+        background-color: @primary-color-background-disabled;
+        &::before {
+          border-color: @primary-color-disabled;
+        }
+      }
+    }
+  }
 }
