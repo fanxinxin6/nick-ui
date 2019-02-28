@@ -2,6 +2,7 @@ import './style/index.less'
 import { prefix } from '..'
 const prefixClass = `${prefix}-button`
 export default {
+  name: 'ui-button',
   props: {
     custom: {
       type: String,
@@ -11,17 +12,27 @@ export default {
     size: {
       type: String,
       default: 'normal',
-      validator: value => new Set(['normal', 'small', 'mendium', 'large']).has(value)
+      validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
+    },
+    shape: {
+      type: String,
+      default: '',
+      validator: value => new Set(['', 'circle', 'round']).has(value)
     },
     disabled: {
       type: Boolean,
       default: false
     }
   },
-  render (h) {
-    const { custom, size, disabled, $slots, onclick } = this
-    const className = ['', custom, size].map(className => className ? `${prefixClass}-${className}` : prefixClass).join(' ')
-    const effect = $slots.effect ? $slots.effect[0] : <div class={`${prefixClass}-effect`}>    </div>
+  data () {
+    return {
+      clicked: false
+    }
+  },
+  render () {
+    const { custom, size, shape, disabled, clicked, $slots, onclick } = this
+    const className = `${prefixClass} ` + [custom, size, shape, clicked ? 'clicked' : ''].map(className => className ? `${prefixClass}-${className}` : '').join(' ')
+    const effect = $slots.effect || <div class={`${prefixClass}-effect`}>    </div>
     return (
       <button onclick={onclick} disabled={disabled} type="button" class={className}>
         <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
@@ -34,8 +45,12 @@ export default {
     )
   },
   methods: {
-    onclick () {
-      console.log(55)
+    onclick (event) {
+      this.$emit('click', event)
+      this.clicked = false
+      setTimeout(() => {
+        this.clicked = true
+      }, 17)
     }
   }
 }

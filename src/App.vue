@@ -1,42 +1,60 @@
 <template>
   <div id="app">
-    <div>
-      asdf
-      <ui-button>
-        按钮
-      </ui-button>
-      <ui-button size="small">
-        按钮
-        <div slot="effect">123
-          <div>456</div>
-        </div>
-      </ui-button>
-      <ui-button size="large">
-        按钮
-      </ui-button>
-      <ui-button-group></ui-button-group>
-      <ui-radio></ui-radio>
-      <ui-radio-group></ui-radio-group>
-      <ui-checkbox></ui-checkbox>
-      <ui-checkbox-group></ui-checkbox-group>
-      <ui-select></ui-select>
-      <ui-dropdown></ui-dropdown>
-      <ui-switch></ui-switch>
-      <ui-toast></ui-toast>
-      <ui-modal></ui-modal>
-      <ui-tabs></ui-tabs>
-      <ui-dialog></ui-dialog>
+    <div>asdf
+      <nick-button disabled>按钮</nick-button>
+      <nick-button size="small" shape="circle">按钮</nick-button>
+      <nick-button size="large" shape="round">按钮</nick-button>
+      <nick-button-group>
+        <div>asdflk</div>
+        <div>asdflk</div>
+        <Button size="small">asdfasd</Button>
+        <nick-button size="small" shape="circle">按钮</nick-button>
+        <nick-button size="small" shape="circle">按钮</nick-button>
+      </nick-button-group>
+      <!-- <nick-radio v-model="r" value="2" disabled size="small">2222</nick-radio>
+      <nick-radio v-model="r" value="3" size="large">3333</nick-radio>-->
+      <nick-radio-group v-model="r">
+        <h2>asdlfk</h2>
+        <nick-radio value="1">1111</nick-radio>
+        <Radio value="2">2222</Radio>
+      </nick-radio-group>
+      <nick-radio v-model="r" value="1">1111</nick-radio>
+      <Radio v-model="r" value="2">2222</Radio>
+      <Radio v-model="r" disabled value="3">3333</Radio>
+      <Radio v-model="r" value="3">3333</Radio>
+      <hr>
+      <nick-checkbox v-model="c" value="1">001</nick-checkbox>
+      <nick-checkbox v-model="c" value="2">002</nick-checkbox>
+      <nick-checkbox-group v-model="c">
+        <nick-checkbox value="1">001</nick-checkbox>
+        <nick-checkbox disabled value="2">002</nick-checkbox>
+      </nick-checkbox-group>
+      <nick-select></nick-select>
+      <nick-dropdown></nick-dropdown>
+      <nick-switch></nick-switch>
+      <nick-toast></nick-toast>
+      <nick-modal></nick-modal>
+      <nick-tabs></nick-tabs>
+      <nick-dialog></nick-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import ui from './'
+import ui, { Button, Radio } from './'
 import vue from 'vue'
 vue.use(ui)
 export default {
   name: 'app',
   components: {
+    Button,
+    Radio
+  },
+  data () {
+    return {
+      r: '1',
+      c: ['2']
+    }
   }
 }
 </script>

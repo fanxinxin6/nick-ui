@@ -1,8 +1,18 @@
-@keyframes effect-fade-in{
-
+@keyframes effect-fade-in {
 }
-@keyframes effect-fade-out{
-    100%{
-        opacity: 0;
-    }
+@keyframes effect-fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes effect-zoom-in {
+  100% {
+    left: -6px;
+    right: -6px;
+    top: -6px;
+    bottom: -6px;
+  }
 }

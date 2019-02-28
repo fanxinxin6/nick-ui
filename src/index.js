@@ -12,6 +12,7 @@ import dropdown from './components/dropdown/'
 import toast from './components/toast/'
 import modal from './components/modal/'
 import dialog from './components/dialog/'
+export const prefix = 'nick'
 export const Button = button
 export const ButtonGroup = buttonGroup
 export const Radio = radio
@@ -43,7 +44,7 @@ export default {
       dialog
     }
     for (let [ name, component ] of Object.entries(components)) {
-      v.component(`ui-${name.replace(/([A-Z])/g, match => '-' + match.toLocaleLowerCase())}`, component)
+      v.component(`${prefix}-${name.replace(/([A-Z])/g, match => '-' + match.toLocaleLowerCase())}`, component)
     }
   }
 }

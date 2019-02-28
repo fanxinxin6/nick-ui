@@ -1,6 +1,41 @@
 @import './components.less';
 @prefix:nick;
 @primary-color: #1890ff;   
+@disabled-color : rgba(0,0,0,0.25);        
+@border-color-base: #d9d9d9; 
+@border-radius-base:4px;
+// 动画效果
+@animation-duration-base:0.3s;
+@animation-timing-effect:cubic-bezier(.645, .045, .85, 1); 
+// 过渡效果
+@transition-duration-base:0.3s;
+@transition-timing:linear;
+
+// 主要按钮颜色
 @button-primary-color: @primary-color;
 @button-primary-color-hover: lighten(@button-primary-color, 10%);
 @button-primary-color-active: darken(@button-primary-color, 10%);
+// 主要按钮禁用色
+@button-primary-color-disabled:@disabled-color;
+@button-primary-color-disabled-border:@border-color-base;
+@button-primary-color-disabled-background:lighten(@border-color-base,10%);
+
+
+// 单选按钮颜色
+@radio-primary-color: @primary-color;
+@radio-primary-color-hover: lighten(@radio-primary-color, 10%);
+@radio-primary-color-active: lighten(@radio-primary-color, 10%);
+// 单选按钮禁用色
+@radio-primary-color-disabled:@disabled-color;
+@radio-primary-color-disabled-border:@border-color-base;
+@radio-primary-color-disabled-background:lighten(@border-color-base,10%);
+
+
+// 复选框按钮颜色
+@checkbox-primary-color: @primary-color;
+@checkbox-primary-color-hover: lighten(@checkbox-primary-color, 10%);
+@checkbox-primary-color-active: lighten(@checkbox-primary-color, 10%);
+// 复选框按钮禁用色
+@checkbox-primary-color-disabled:@disabled-color;
+@checkbox-primary-color-disabled-border:@border-color-base;
+@checkbox-primary-color-disabled-background:lighten(@border-color-base,10%);

@@ -4,6 +4,7 @@
   color: #000;
   position: relative;
   border-radius: 6px;
+  user-select: none;
   background-color: transparent;
   border: 1px solid transparent;
 }
@@ -20,9 +21,11 @@
     top: 0;
     right: 0;
     bottom: 0;
+    opacity: 0;
     border-radius: inherit;
     position: absolute;
-    border:6px solid red;
+    background-color: @button-primary-color-hover;
+    border: 6px solid @button-primary-color-hover;
   }
 }
 .button-inner() {
@@ -32,36 +35,66 @@
   }
 }
 .button-size() {
+  &-auto {
+  }
   &-normal {
-    padding: 4px 32px;
+    .@{prefix}-button-wrapper {
+      padding: 4px 32px;
+    }
   }
   &-small {
     width: 114px;
     height: 32px;
+    &.@{prefix}-button-circle {
+      width: 32px;
+    }
   }
   &-large {
     width: 200px;
     height: 40px;
+    &.@{prefix}-button-circle {
+      height: 200px;
+    }
+  }
+}
+.button-shape() {
+  &-circle {
+    border-radius: 50%;
+  }
+  &-round {
+    border-radius: 20px;
+  }
+}
+.button-disabled() {
+  &:disabled {
+    cursor: not-allowed;
   }
 }
 .button-primary() {
   &-primary {
-    color: #fff;
-    border-color: @button-primary-color;
     &:enabled {
+      color: #fff;
+      border-color: @button-primary-color;
       background-color: @button-primary-color;
-    }
-    &:hover {
-      background-color: @button-primary-color-hover;
-    }
-    &:focus {
-      background-color: @button-primary-color-hover;
-    }
-    &:active {
-      background-color: @button-primary-color-active;
-      .@{prefix}-button-effect{
-          animation: 0.5s effect-fade-out linear both;
+      &:hover {
+        background-color: @button-primary-color-hover;
       }
+      &:focus {
+        background-color: @button-primary-color-hover;
+      }
+      &:active {
+        background-color: @button-primary-color-active;
+      }
+      &.@{prefix}-button-clicked {
+        .@{prefix}-button-effect {
+          animation: 0.3s effect-zoom-in @animation-timing-effect, 0.3s effect-fade-out @animation-timing-effect;
+        }
+      }
+    }
+    &:disabled {
+      color: @button-primary-color-disabled;
+      border-color: @button-primary-color-disabled-border;
+      background-color: @button-primary-color-disabled-background;
     }
   }
 }
