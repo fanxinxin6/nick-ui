@@ -33,10 +33,15 @@
       </nick-checkbox-group>
       <hr>
       <nick-switch v-model="s" value="1">001</nick-switch>
-      <nick-switch v-model="s" value="2">002</nick-switch>
-      <nick-switch v-model="s" value="3">003</nick-switch>
-      <nick-switch v-model="s" value="4">004</nick-switch>
-
+      <nick-switch size="small" v-model="s" value="2">002</nick-switch>
+      <nick-switch size="large" disabled v-model="s" value="3">003</nick-switch>
+      <nick-switch v-model="s" disabled value="4">004</nick-switch>
+      <nick-switch-group v-model="s">
+        <nick-switch value="1">001</nick-switch>
+        <nick-switch value="2">002</nick-switch>
+        <nick-switch value="3">003</nick-switch>
+        <nick-switch value="4">004</nick-switch>
+      </nick-switch-group>
       <nick-select></nick-select>
       <nick-dropdown></nick-dropdown>
       <nick-toast></nick-toast>

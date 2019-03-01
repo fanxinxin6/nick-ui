@@ -14,11 +14,6 @@ export default {
       default: 'normal',
       validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
     },
-    shape: {
-      type: String,
-      default: '',
-      validator: value => new Set(['', 'circle', 'round']).has(value)
-    },
     disabled: {
       type: Boolean,
       default: false
@@ -47,8 +42,8 @@ export default {
     }
   },
   render () {
-    const { custom, size, shape, disabled, clicked, $slots, onclick, checked } = this
-    const className = `${prefixClass} ` + [custom, size, shape, clicked ? 'clicked' : ''].map(className => className ? `${prefixClass}-${className}` : '').join(' ')
+    const { custom, size, disabled, clicked, $slots, onclick, checked } = this
+    const className = `${prefixClass} ` + [custom, size, clicked ? 'clicked' : ''].map(className => className ? `${prefixClass}-${className}` : '').join(' ')
     const effect = $slots.effect || <div class={`${prefixClass}-effect`}></div>
     return (
       <button onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
