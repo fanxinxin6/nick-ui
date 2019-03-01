@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="a=true">
     <div>asdf
       <nick-button disabled>按钮</nick-button>
       <nick-button size="small" shape="circle">按钮</nick-button>
@@ -45,7 +45,9 @@
       <nick-select></nick-select>
       <nick-dropdown></nick-dropdown>
       <nick-toast></nick-toast>
-      <nick-modal></nick-modal>
+      <nick-modal :visible.sync="a" :full-screen="false">
+        456asdf
+      </nick-modal>
       <nick-tabs></nick-tabs>
       <nick-dialog></nick-dialog>
     </div>
@@ -63,10 +65,14 @@ export default {
     Radio
   },
   data () {
+    setTimeout(() => {
+      this.a = true
+    }, 1000)
     return {
       r: '1',
       c: ['2'],
-      s: ['3']
+      s: ['3'],
+      a: false
     }
   }
 }
