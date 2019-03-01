@@ -13,6 +13,7 @@ import dropdown from './components/dropdown/'
 import toast from './components/toast/'
 import modal from './components/modal/'
 import dialog from './components/dialog/'
+import scroll from './components/scroll/'
 export const prefix = 'nick'
 export const Button = button
 export const ButtonGroup = buttonGroup
@@ -28,6 +29,7 @@ export const Dropdown = dropdown
 export const Toast = toast
 export const Modal = modal
 export const Dialog = dialog
+export const Scroll = scroll
 export default {
   install (v) {
     const components = {
@@ -44,7 +46,8 @@ export default {
       dropdown,
       toast,
       modal,
-      dialog
+      dialog,
+      scroll
     }
     for (let [ name, component ] of Object.entries(components)) {
       v.component(`${prefix}-${name.replace(/([A-Z])/g, match => '-' + match.toLocaleLowerCase())}`, component)
