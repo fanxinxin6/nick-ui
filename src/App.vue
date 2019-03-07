@@ -1,6 +1,7 @@
 <template>
   <div id="app" >
-    <div>asdf
+    <div >
+      <template v-if="1">
       <nick-button disabled>按钮</nick-button>
       <nick-button size="small" shape="circle">按钮</nick-button>
       <nick-button size="large" shape="round">按钮</nick-button>
@@ -48,8 +49,10 @@
       <nick-modal :visible.sync="a" :full-screen="false">456asdf</nick-modal>
       <nick-tabs></nick-tabs>
       <nick-dialog></nick-dialog>
-      <div class="display-flex flex-wrap">
-        <nick-scroll>asdf</nick-scroll>
+      </template>
+       <nick-scroll>asdf</nick-scroll>
+      <div v-if="0" class="display-flex flex-wrap">
+
         <nick-scroll>asdf</nick-scroll>
         <nick-scroll>asdf</nick-scroll>
         <nick-scroll>asdf</nick-scroll>
@@ -72,7 +75,8 @@
         <nick-scroll>asdf</nick-scroll>
       </div>
     </div>
-  </div>
+
+   </div>
 </template>
 
 <script>
@@ -93,8 +97,10 @@ export default {
       r: '1',
       c: ['2'],
       s: ['3'],
-      a: false
+      a: false,
+      h: 0
     }
   }
+
 }
 </script>
