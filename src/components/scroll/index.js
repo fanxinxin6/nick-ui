@@ -173,7 +173,7 @@ const ScrollBar = {
     mousewheelHandler (detail, moveSize) {
       const { container, bar, wrap } = this
       const { thumb } = this.$refs
-      const { axis, clientSize, offset, scrollSize } = bar
+      const { axis, clientSize, scrollSize } = bar
       const maxMove = container[scrollSize] - container[clientSize]
       const vertical = axis === 'Y'
       let move = Math.abs(
