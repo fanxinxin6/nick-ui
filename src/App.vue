@@ -30,6 +30,9 @@ html {
       <Button flat size="large">flat按钮</Button>
       <Button outline disabled size="large">large按钮</Button>
     </div>
+    <div>
+      <Radio>asdf</Radio>
+    </div>
     <div v-if="0">
       <template v-if="1">
         <nick-button disabled>按钮</nick-button>
@@ -116,11 +119,12 @@ html {
 <script>
 import Theme from './utils/theme'
 import Button from './components/button/'
+import Radio from './components/radio/'
 Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button
+    Button, Radio
   },
   data () {
     setTimeout(() => {

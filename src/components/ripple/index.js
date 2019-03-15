@@ -22,10 +22,10 @@ export default {
   },
   methods: {
     animationend () {
-      this.show = false
+      // this.show = false
       this.$refs.inner.removeEventListener('animationend', this.animationend)
     },
-    rippleClick ({ pageX, pageY }) {
+    rippleClick ({ pageX, pageY }, { center } = {}) {
       this.show = true
       this.$nextTick(() => {
         const scale = 2
@@ -45,6 +45,7 @@ export default {
           left: `${pageX - offset.left - width / 2}px`,
           top: `${pageY - offset.top - height / 2}px`
         }
+        console.log(center)
         const showClass = `${prefixClass}-show`
         inner.addEventListener('animationend', this.animationend)
         inner.classList.remove(showClass)

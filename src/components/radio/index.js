@@ -1,6 +1,7 @@
 import './style/index.less'
-import { prefix } from '..'
-const prefixClass = `${prefix}-radio`
+import Theme from '../../utils/theme'
+import Ripple from '../ripple'
+import { createFrameworkClass } from '../../utils/'
 export default {
   name: 'ui-radio',
   props: {
@@ -25,13 +26,10 @@ export default {
     prop: 'modelData',
     event: 'input'
   },
-  data () {
-    return {
-      clicked: false
-    }
-  },
   computed: {
     isGroup () {
+      const { prefix } = Theme
+      const prefixClass = `${prefix}-radio`
       return this.$parent.$options._componentTag === `${prefixClass}-group`
     },
     modelValue () {
@@ -42,13 +40,15 @@ export default {
     }
   },
   render () {
-    const { custom, size, disabled, clicked, $slots, onclick, checked } = this
-    const className = `${prefixClass} ` + [custom, size, clicked ? 'clicked' : ''].map(className => className ? `${prefixClass}-${className}` : '').join(' ')
-    const effect = $slots.effect || <div class={`${prefixClass}-effect`}></div>
+    const { prefix } = Theme
+    const prefixClass = `${prefix}-radio`
+    const { custom, size, disabled, $slots, onclick, checked } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
+    let effect = $slots.effect || <Ripple ref="effect" class={`${prefixClass}-effect`}/>
     return (
       <button onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
-          <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
+          <div class={`${prefixClass}-wrapper ${prefix}-inherit-${custom} display-flex flex-row-center flex-col-center`}>
             {effect}
           </div>
           <div class={`${prefixClass}-inner`}>
@@ -61,6 +61,10 @@ export default {
   methods: {
     onclick (event) {
       const { value, modelValue } = this
+      const { effect } = this.$refs
+      if (effect && effect.rippleClick) {
+        effect.rippleClick(event, { center: true })
+      }
       if (value !== modelValue) {
         this.$emit('change', value === modelValue, event)
       }
@@ -69,11 +73,6 @@ export default {
       } else {
         this.$emit('input', value)
       }
-      if (this.checked) return
-      this.clicked = false
-      setTimeout(() => {
-        this.clicked = true
-      }, 17)
     }
   }
 }

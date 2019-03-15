@@ -48,6 +48,9 @@ const updateStyle = () => {
     background-color:${themeColor};
     border-color:${themeColor};
   }
+  .${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}{
+    color:${themeColor};
+  }
   .${prefix}-${themeName}:disabled::before{
     background-color:${disabledColor};
     border-color:${disabledColor};
@@ -60,6 +63,12 @@ const updateStyle = () => {
     background-color:initial;
   }
   .${prefix}-${themeName}.${prefix}-${themeName}-flat{
+    color:${activeColor};
+  }
+  .${prefix}-${themeName}:enabled:hover .${prefix}-inherit-${themeName}{
+    color:${hoverColor};
+  }
+  .${prefix}-${themeName}:enabled:active .${prefix}-inherit-${themeName}{
     color:${activeColor};
   }
   .${prefix}-${themeName}.${prefix}-${themeName}-flat::before{

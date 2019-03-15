@@ -11,8 +11,7 @@
   &-wrapper {
     border-radius: 50%;
     position: relative;
-    border: 1px solid transparent;
-    background-color: transparent;
+    border: 1px solid currentColor;
     transition:@transition-duration-base @transition-timing;
     &::before {
       content: "";
@@ -34,11 +33,13 @@
     top: 0;
     right: 0;
     bottom: 0;
-    opacity: 0;
     border-radius: inherit;
     position: absolute;
     background-color: @primary-color-hover;
     border: 6px solid @primary-color-hover;
+    .@{prefix}-ripper-inner{
+      border: 2px soild red
+    }
   }
 }
 .radio-checked(){
@@ -80,48 +81,5 @@
   &:disabled {
     cursor: not-allowed;
     
-  }
-}
-.radio-primary() {
-  &-primary {
-    &:enabled {
-      .@{prefix}-radio-wrapper {
-        border-color: @border-color-base;
-        &::before{
-          background-color: @primary-color-enabled;
-        }
-      }
-      &:hover {
-        .@{prefix}-radio-wrapper {
-          border-color: @primary-color-hover;
-        }
-      }
-      &:focus {
-        .@{prefix}-radio-wrapper {
-          border-color: @primary-color-focus;
-        }
-      }
-      &:active {
-        .@{prefix}-radio-wrapper {
-          border-color: @primary-color-active;
-        }
-      }
-      &.@{prefix}-radio-clicked {
-        .@{prefix}-radio-effect {
-          animation: @animation-duration-base effect-zoom-in @animation-timing-effect,
-            @animation-duration-base effect-fade-out @animation-timing-effect;
-        }
-      }
-    }
-    &:disabled {
-      color: @primary-color-disabled;
-      .@{prefix}-radio-wrapper {
-        border-color: @primary-color-border-disabled;
-        background-color: @primary-color-background-disabled;  
-        &::before{
-          background-color:  @primary-color-disabled;
-        }
-      }
-    }
   }
 }
