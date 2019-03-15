@@ -1,0 +1,36 @@
+.ripple() {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  position: absolute;
+  pointer-events: none;
+}
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1);
+  }
+}
+.ripple-inner() {
+  &-inner {
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0.12;
+    position: absolute;
+    border-radius: 50%;
+  }
+}
+.ripple-show() {
+  &-show {
+    will-change: transform;
+    background-color: currentColor;
+    animation: ripple 1.2s cubic-bezier(0, 0, 0.2, 1);
+  }
+}

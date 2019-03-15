@@ -1,12 +1,14 @@
 <style>
-#app,body,html{
+#app,
+body,
+html {
   height: 100%;
 }
-.nick-scroll{
+.nick-scroll {
   width: 200px;
   height: 200px;
 }
-.test{
+.test {
   height: 600px;
   background: pink;
   border: 2px solid blue;
@@ -14,12 +16,25 @@
 </style>
 
 <template>
-  <div id="app">
-    <div v-if="1">
+  <div id="app" style="padding:100px">
+    <div>
+      <Button>auto按钮</Button>
+      <Button size="small">small按钮</Button>
+      <Button size="large">large按钮</Button>
+      <Button disabled size="large">large按钮</Button>
+      <Button custom="accent" size="large">large按钮</Button>
+    </div>
+    <div>
+      <Button custom="accent" outline>flat auto按钮</Button>
+      <Button outline size="small">small按钮</Button>
+      <Button flat size="large">flat按钮</Button>
+      <Button outline disabled size="large">large按钮</Button>
+    </div>
+    <div v-if="0">
       <template v-if="1">
         <nick-button disabled>按钮</nick-button>
         <nick-button size="small" shape="circle">按钮</nick-button>
-        <nick-button size="large" shape="round">按钮</nick-button>
+        <nick-button flat size="large" shape="round">按钮flat</nick-button>
         <nick-button-group>
           <div>asdflk</div>
           <div>asdflk</div>
@@ -99,14 +114,13 @@
 </template>
 
 <script>
-import ui, { Button, Radio } from './'
-import vue from 'vue'
-vue.use(ui)
+import Theme from './utils/theme'
+import Button from './components/button/'
+Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button,
-    Radio
+    Button
   },
   data () {
     setTimeout(() => {

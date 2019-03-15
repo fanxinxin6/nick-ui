@@ -1,5 +1,6 @@
 import './style/index.less'
-import { prefix } from '..'
+import Theme from '../../utils/theme'
+const { prefix } = Theme
 const prefixClass = `${prefix}-button-group`
 export default {
   render () {
