@@ -15,15 +15,15 @@
     transition:@transition-duration-base @transition-timing;
     &::before {
       content: "";
-      width: 0;
-      height: 0;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%,-50%);
-      background-color: #fff;
-      position: absolute;
       border-radius: inherit;
       transition: inherit;
+      position: absolute;
+      left:50%;
+      top: 50%;
+      width: 100%;
+      height: 100%;
+      background-color: currentColor;
+      transform: translate(-50%,-50%) scale(0.9);
     }
   }
 }
@@ -35,11 +35,6 @@
     bottom: 0;
     border-radius: inherit;
     position: absolute;
-    background-color: @primary-color-hover;
-    border: 6px solid @primary-color-hover;
-    .@{prefix}-ripper-inner{
-      border: 2px soild red
-    }
   }
 }
 .radio-checked(){

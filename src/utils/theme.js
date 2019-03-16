@@ -5,7 +5,7 @@ let theme = {
   primary: '#65BCCB',
   error: '#f00',
   warn: '#f10',
-  accent: '#aeaeae'
+  accent: '#666'
 }
 let activeDarkness = 0.2
 let hoverBrightness = 0.2
@@ -55,7 +55,10 @@ const updateStyle = () => {
     background-color:${disabledColor};
     border-color:${disabledColor};
   }
-  .${prefix}-${themeName}.${prefix}-${themeName}-outline{
+  .${prefix}-${themeName}.${prefix}-${themeName}-outline:disabled{
+    color:${disabledColor};
+  }
+  .${prefix}-${themeName}.${prefix}-${themeName}-outline:enabled{
     color:${activeColor};
     border:1px solid transparent;
   }

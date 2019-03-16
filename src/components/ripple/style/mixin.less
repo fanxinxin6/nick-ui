@@ -16,6 +16,14 @@
     transform: scale(1);
   }
 }
+@keyframes ripple-hide {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
 .ripple-inner() {
   &-inner {
     left: 0;
@@ -29,8 +37,19 @@
 }
 .ripple-show() {
   &-show {
-    will-change: transform;
-    background-color: currentColor;
-    animation: ripple 1.2s cubic-bezier(0, 0, 0.2, 1);
+    .@{prefix}-ripple-inner {
+      will-change: transform;
+      background-color: currentColor;
+      animation: ripple 1.2s cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+}
+.ripple-hide() {
+  &-hide {
+    overflow: visible;
+    .@{prefix}-ripple-inner {
+      background-color: currentColor;
+      animation: ripple-hide 1.2s cubic-bezier(0, 0, 0.2, 1);
+    }
   }
 }

@@ -15,10 +15,7 @@ export default {
       default: 'normal',
       validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
+    disabled: false,
     value: {},
     modelData: {}
   },
@@ -44,7 +41,7 @@ export default {
     const prefixClass = `${prefix}-radio`
     const { custom, size, disabled, $slots, onclick, checked } = this
     const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
-    let effect = $slots.effect || <Ripple ref="effect" class={`${prefixClass}-effect`}/>
+    let effect = $slots.effect || <Ripple center={true} ref="effect" class={`${prefixClass}-effect`}/>
     return (
       <button onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
@@ -63,7 +60,7 @@ export default {
       const { value, modelValue } = this
       const { effect } = this.$refs
       if (effect && effect.rippleClick) {
-        effect.rippleClick(event, { center: true })
+        effect.rippleClick(event)
       }
       if (value !== modelValue) {
         this.$emit('change', value === modelValue, event)
