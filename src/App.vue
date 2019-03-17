@@ -17,14 +17,14 @@ html {
 
 <template>
   <div id="app" style="padding:100px">
-    <div v-if="0">
+    <div v-if="1">
       <Button>auto按钮</Button>
       <Button size="small">small按钮</Button>
       <Button size="large">large按钮</Button>
       <Button disabled size="large">large按钮</Button>
       <Button custom="accent" size="large">large按钮</Button>
     </div>
-    <div v-if="0">
+    <div v-if="1">
       <Button custom="accent" outline>flat auto按钮</Button>
       <Button outline size="small">small按钮</Button>
       <Button flat size="large">flat按钮</Button>
@@ -52,6 +52,7 @@ html {
       <CheckBox disabled value="3">333</CheckBox>
       </CheckboxGroup>
     </div>
+    <Photoshop v-model="colos"/>
     <div v-if="0">
       <template v-if="1">
         <nick-button disabled>按钮</nick-button>
@@ -142,11 +143,17 @@ import Radio from './components/radio/'
 import RadioGroup from './components/radioGroup/'
 import CheckBox from './components/checkbox/'
 import CheckboxGroup from './components/checkboxGroup'
+import { Photoshop } from 'vue-color'
 Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button, Radio, RadioGroup, CheckBox, CheckboxGroup
+    Button, Radio, RadioGroup, CheckBox, CheckboxGroup, Photoshop
+  },
+  watch: {
+    colos: color => {
+      Theme.theme = { primary: color.hex }
+    }
   },
   data () {
     setTimeout(() => {
@@ -156,9 +163,9 @@ export default {
       r: '1',
       c: ['2'],
       s: ['3'],
-      a: false,
       h: 0,
-      a: '2'
+      a: '2',
+      colos: ''
     }
   }
 }

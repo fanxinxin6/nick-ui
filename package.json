@@ -10,7 +10,8 @@
   "dependencies": {
     "color": "^3.1.0",
     "resize-observer-polyfill": "^1.5.1",
-    "vue": "^2.6.6"
+    "vue": "^2.6.6",
+    "vue-color": "^2.7.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",
