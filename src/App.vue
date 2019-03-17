@@ -31,7 +31,8 @@ html {
       <Button outline disabled size="large">large按钮</Button>
     </div>
     <div>
-      <Radio>asdf</Radio>
+      <Radio v-model="a" value="1">asdf</Radio>
+      <Radio v-model="a" value="2">asdf</Radio>
     </div>
     <div v-if="0">
       <template v-if="1">
@@ -135,7 +136,8 @@ export default {
       c: ['2'],
       s: ['3'],
       a: false,
-      h: 0
+      h: 0,
+      a: '2'
     }
   }
 }

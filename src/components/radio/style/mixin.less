@@ -16,14 +16,13 @@
     &::before {
       content: "";
       border-radius: inherit;
-      transition: inherit;
       position: absolute;
       left:50%;
       top: 50%;
-      width: 100%;
-      height: 100%;
-      background-color: currentColor;
-      transform: translate(-50%,-50%) scale(0.9);
+      width: 50%;
+      height: 50%;
+      background-color: transparent;
+      transform: translate(-50%,-50%) ;
     }
   }
 }
@@ -33,16 +32,17 @@
     top: 0;
     right: 0;
     bottom: 0;
+    opacity: 0.5;
     border-radius: inherit;
     position: absolute;
+    background-color: transparent;
   }
 }
 .radio-checked(){
   &[checked]{ 
     .@{prefix}-radio-wrapper {
       &::before{
-        width: 50%;
-        height: 50%;
+       background-color: currentColor;
       }
     }
   }
@@ -75,6 +75,21 @@
 .radio-disabled() {
   &:disabled {
     cursor: not-allowed;
-    
+  }
+}
+.radio-clicked(){
+  &-clicked{
+    .@{prefix}-radio-effect{
+      animation: radio-checkbox-effect 0.2s both;
+      background-color: currentColor;
+    }
+  }
+}
+@keyframes radio-checkbox-effect{
+  0%{
+    transform: scale(1)
+  }
+  100%{
+    transform: scale(2.5)
   }
 }

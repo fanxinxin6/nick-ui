@@ -36,16 +36,24 @@ export default {
       return this.value === this.modelValue
     }
   },
+  data () {
+    return {
+      clicked: false
+    }
+  },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-radio`
-    const { custom, size, disabled, $slots, onclick, checked } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
-    let effect = $slots.effect || <Ripple center={true} ref="effect" class={`${prefixClass}-effect`}/>
+    const { checked } = this
+    const custom = checked ? this.custom : 'accent'
+    const { size, disabled, clicked, $slots, onclick, onmousedown, onmouseup } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, clicked }, prefix, prefixClass)
+    let effect = $slots.effect || <div class={`${prefixClass}-effect`}/>
+    this.prefixClass = prefixClass
     return (
-      <button onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
+      <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
-          <div class={`${prefixClass}-wrapper ${prefix}-inherit-${custom} display-flex flex-row-center flex-col-center`}>
+          <div onmousedown={onmousedown} onmouseup={onmouseup} class={`${prefixClass}-wrapper ${prefix}-inherit-${custom} display-flex flex-row-center flex-col-center`}>
             {effect}
           </div>
           <div class={`${prefixClass}-inner`}>
@@ -56,12 +64,29 @@ export default {
     )
   },
   methods: {
+    onmousedown () {
+      this.effectEnd = false
+      this.hold = true
+      this.$refs.container.addEventListener('animationend', this.animationend)
+      this.clicked = true
+    },
+    onmouseup () {
+      this.hold = false
+      if (this.effectEnd) {
+        if (!this.hold) {
+          this.clicked = false
+        }
+      }
+    },
+    animationend () {
+      this.effectEnd = true
+      if (!this.hold) {
+        this.clicked = false
+      }
+      this.$refs.container.removeEventListener('animationend', this.animationend)
+    },
     onclick (event) {
       const { value, modelValue } = this
-      const { effect } = this.$refs
-      if (effect && effect.rippleClick) {
-        effect.rippleClick(event)
-      }
       if (value !== modelValue) {
         this.$emit('change', value === modelValue, event)
       }
