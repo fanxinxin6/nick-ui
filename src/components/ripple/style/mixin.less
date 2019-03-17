@@ -33,6 +33,16 @@
     opacity: 0.12;
     position: absolute;
     border-radius: 50%;
+    &::before{
+      content: "";
+      display: block;
+      height: 100%;
+      background:rgba(255, 255, 255, 0.3);
+      border-radius: inherit;
+      border:inherit;
+      transition: inherit;
+      will-change: inherit;
+    }
   }
 }
 .ripple-show() {
@@ -41,6 +51,9 @@
       will-change: transform;
       background-color: currentColor;
       animation: ripple 1.2s cubic-bezier(0, 0, 0.2, 1);
+      &::before{
+        animation: ripple 1s 0.2s cubic-bezier(0, 0, 0.2, 1);
+      }
     }
   }
 }
@@ -50,6 +63,9 @@
     .@{prefix}-ripple-inner {
       background-color: currentColor;
       animation: ripple-hide 1.2s cubic-bezier(0, 0, 0.2, 1);
+      &::before{
+        animation: ripple-hide 1s 0.2s cubic-bezier(0, 0, 0.2, 1);
+      }
     }
   }
 }
