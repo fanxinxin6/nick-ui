@@ -1,7 +1,7 @@
 import './style/index.less'
-import { prefix } from '..'
-const prefixClass = `${prefix}-radio-group`
+import Theme from '../../utils/theme'
 export default {
+  name: 'radio-group',
   props: {
     modelData: {}
   },
@@ -17,7 +17,9 @@ export default {
     }
   },
   render () {
-    const children = this.$slots.default.filter(child => child.componentOptions && child.componentOptions.Ctor.extendOptions.name === 'ui-radio')
+    const { prefix } = Theme
+    const prefixClass = `${prefix}-radio-group`
+    const children = this.$slots.default.filter(child => child.componentOptions && child.componentOptions.Ctor.extendOptions.name === 'radio')
     return (
       <div class={prefixClass}>
         <div class={`${prefix}-wrapper display-flex flex-col-center`}>

@@ -1,7 +1,7 @@
 import './style/index.less'
-import { prefix } from '..'
-const prefixClass = `${prefix}-checkbox-group`
+import Theme from '../../utils/theme'
 export default {
+  name: 'checkbox-group',
   props: {
     modelData: {}
   },
@@ -15,7 +15,9 @@ export default {
     }
   },
   render () {
-    const children = this.$slots.default.filter(child => child.componentOptions && child.componentOptions.Ctor.extendOptions.name === 'ui-checkbox')
+    const { prefix } = Theme
+    const prefixClass = `${prefix}-checkbox-group`
+    const children = this.$slots.default.filter(child => child.componentOptions && child.componentOptions.Ctor.extendOptions.name === 'checkbox')
     return (
       <div class={prefixClass}>
         <div class={`${prefix}-wrapper display-flex flex-col-center`}>

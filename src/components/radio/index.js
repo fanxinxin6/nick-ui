@@ -1,19 +1,14 @@
 import './style/index.less'
 import Theme from '../../utils/theme'
-import Ripple from '../ripple'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'ui-radio',
+  name: 'radio',
   props: {
     custom: {
-      type: String,
-      default: 'primary',
-      validator: value => new Set(['primary']).has(value)
+      default: 'primary'
     },
     size: {
-      type: String,
-      default: 'normal',
-      validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
+      default: 'normal'
     },
     disabled: false,
     value: {},
@@ -25,9 +20,7 @@ export default {
   },
   computed: {
     isGroup () {
-      const { prefix } = Theme
-      const prefixClass = `${prefix}-radio`
-      return this.$parent.$options._componentTag === `${prefixClass}-group`
+      return this.$parent.$options.name === `radio-group`
     },
     modelValue () {
       return this.isGroup ? this.$parent.modelData : this.modelData
@@ -65,6 +58,8 @@ export default {
   },
   methods: {
     onmousedown () {
+      const { disabled } = this
+      if (disabled || disabled === '') return
       this.effectEnd = false
       this.hold = true
       this.$refs.container.addEventListener('animationend', this.animationend)

@@ -17,22 +17,40 @@ html {
 
 <template>
   <div id="app" style="padding:100px">
-    <div>
+    <div v-if="0">
       <Button>auto按钮</Button>
       <Button size="small">small按钮</Button>
       <Button size="large">large按钮</Button>
       <Button disabled size="large">large按钮</Button>
       <Button custom="accent" size="large">large按钮</Button>
     </div>
-    <div>
+    <div v-if="0">
       <Button custom="accent" outline>flat auto按钮</Button>
       <Button outline size="small">small按钮</Button>
       <Button flat size="large">flat按钮</Button>
       <Button outline disabled size="large">large按钮</Button>
     </div>
-    <div>
-      <Radio v-model="a" value="1">asdf</Radio>
+    <div v-if="1">
+      <RadioGroup v-model="a">
+      <Radio size="large" custom="error" value="1">asdf</Radio>
+      <Radio custom="accent"  value="2">asdf</Radio>
+      </RadioGroup>
+      <Radio size="large" custom="error" v-model="a" value="1">asdf</Radio>
+      <Radio custom="accent" v-model="a" value="1">asdf</Radio>
+      <Radio disabled custom="accent" v-model="a" value="1">asdf</Radio>
       <Radio v-model="a" value="2">asdf</Radio>
+    </div>
+    <div>
+      <CheckBox v-model="c" value="1">111</CheckBox>
+      <CheckBox custom="error" size="large" v-model="c" value="2">222</CheckBox>
+      <CheckBox v-model="c" value="3">333</CheckBox>
+    </div>
+    <div>
+      <CheckboxGroup v-model="c" >
+      <CheckBox value="1">111</CheckBox>
+      <CheckBox custom="error" size="large" value="2">222</CheckBox>
+      <CheckBox disabled value="3">333</CheckBox>
+      </CheckboxGroup>
     </div>
     <div v-if="0">
       <template v-if="1">
@@ -121,11 +139,14 @@ html {
 import Theme from './utils/theme'
 import Button from './components/button/'
 import Radio from './components/radio/'
+import RadioGroup from './components/radioGroup/'
+import CheckBox from './components/checkbox/'
+import CheckboxGroup from './components/checkboxGroup'
 Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button, Radio
+    Button, Radio, RadioGroup, CheckBox, CheckboxGroup
   },
   data () {
     setTimeout(() => {

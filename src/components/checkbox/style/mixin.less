@@ -1,7 +1,6 @@
 .checkbox() {
   outline: 0;
   cursor: pointer;
-  color: #000;
   position: relative;
   border-radius: 6px;
   user-select: none;
@@ -11,7 +10,7 @@
   &-wrapper {
     border-radius: @border-radius-base;
     position: relative;
-    border: 1px solid transparent;
+    border: 1px solid currentColor;
     background-color: transparent;
     transition: @transition-duration-base @transition-timing;
     &::before {
@@ -24,7 +23,6 @@
       border-top: 0;
       margin-top: -10%;
       position: absolute;
-      transition: inherit;
       transform: rotate(45deg);
     }
   }
@@ -35,16 +33,17 @@
     top: 0;
     right: 0;
     bottom: 0;
-    opacity: 0;
-    border-radius: inherit;
+    opacity: 0.5;
+    border-radius: 50%;
     position: absolute;
-    background-color: @primary-color-hover;
-    border: 6px solid @primary-color-hover;
+    background-color: transparent;
   }
 }
 .checkbox-checked() {
   &[checked] {
     .@{prefix}-checkbox-wrapper {
+      border-color: currentColor;
+      background-color: currentColor;
       &::before {
         border-color: #fff;
       }
@@ -81,51 +80,19 @@
     cursor: not-allowed;
   }
 }
-.checkbox-primary() {
-  &-primary {
-    &:enabled {
-      .@{prefix}-checkbox-wrapper {
-        border-color: @primary-color-disabled;
-      }
-      &:hover {
-        .@{prefix}-checkbox-wrapper {
-          border-color: @primary-color-hover;
-        }
-      }
-      &:focus {
-        .@{prefix}-checkbox-wrapper {
-          // 暂不启用focus状态
-          //border-color: @primary-color-focus;
-        }
-      }
-      &:active {
-        .@{prefix}-checkbox-wrapper {
-          border-color: @primary-color-active;
-        }
-      }
-      &[checked] {
-        .@{prefix}-checkbox-wrapper {
-          border-color: @primary-color-enabled;
-          background-color: @primary-color-enabled;
-        }
-      }
-      &.@{prefix}-checkbox-clicked {
-        .@{prefix}-checkbox-effect {
-          animation: @animation-duration-base effect-zoom-in
-              @animation-timing-effect,
-            @animation-duration-base effect-fade-out @animation-timing-effect;
-        }
-      }
+.checkbox-clicked(){
+  &-clicked{
+    .@{prefix}-checkbox-effect{
+      animation: radio-checkbox-effect 0.2s both;
+      background-color: currentColor;
     }
-    &:disabled {
-      color: @primary-color-disabled;
-      .@{prefix}-checkbox-wrapper {
-        border-color: @primary-color-border-disabled;
-        background-color: @primary-color-background-disabled;
-        &::before {
-          border-color: @primary-color-disabled;
-        }
-      }
-    }
+  }
+}
+@keyframes radio-checkbox-effect{
+  0%{
+    transform: scale(1)
+  }
+  100%{
+    transform: scale(3)
   }
 }
