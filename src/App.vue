@@ -17,14 +17,14 @@ html {
 
 <template>
   <div id="app" style="padding:100px">
-    <div v-if="0">
+    <ButtonGroup v-if="1">
       <Button>auto按钮</Button>
       <Button size="small">small按钮</Button>
       <Button size="large">large按钮</Button>
       <Button disabled size="large">large按钮</Button>
       <Button custom="accent" size="large">large按钮</Button>
-    </div>
-    <div v-if="0">
+    </ButtonGroup>
+    <div v-if="1">
       <Button custom="accent" outline>flat auto按钮</Button>
       <Button outline size="small">small按钮</Button>
       <Button flat size="large">flat按钮</Button>
@@ -138,6 +138,7 @@ html {
 <script>
 import Theme from './utils/theme'
 import Button from './components/button/'
+import ButtonGroup from './components/buttonGroup/'
 import Radio from './components/radio/'
 import RadioGroup from './components/radioGroup/'
 import CheckBox from './components/checkbox/'
@@ -146,7 +147,7 @@ Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button, Radio, RadioGroup, CheckBox, CheckboxGroup
+    Button, ButtonGroup, Radio, RadioGroup, CheckBox, CheckboxGroup
   },
   data () {
     setTimeout(() => {

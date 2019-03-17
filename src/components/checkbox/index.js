@@ -2,7 +2,7 @@ import './style/index.less'
 import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'checkbox',
+  name: 'Checkbox',
   props: {
     custom: {
       default: 'primary'
@@ -27,7 +27,7 @@ export default {
   },
   computed: {
     isGroup () {
-      return this.$parent.$options.name === `checkbox-group`
+      return this.$parent.$options.name === `CheckboxGroup`
     },
     checked () {
       const { modelData } = (this.isGroup ? this.$parent : this)

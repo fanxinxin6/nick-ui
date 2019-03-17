@@ -1,33 +1,14 @@
 # nick-ui
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
-
-### Compiles and minifies for production
-```
-yarn run build
-```
-
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
+## 完成进度
+1. button
+2. button-group
+3. radio
+4. radio-group
+5. checkbox
+6. checkbox-group
+7. ripple
+8. scroll
+9. theme 
 ### editorconfig
 ```js
 {

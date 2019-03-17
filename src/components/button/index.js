@@ -3,19 +3,16 @@ import Theme from '../../utils/theme'
 import Ripple from '../ripple'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'ui-button',
+  name: 'Button',
   props: {
     custom: {
-      default: 'primary',
-      validator: value => new Set(['primary', 'accent']).has(value)
+      default: 'primary'
     },
     size: {
-      default: 'normal',
-      validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
+      default: 'normal'
     },
     shape: {
-      default: '',
-      validator: value => new Set(['', 'circle', 'round']).has(value)
+      default: ''
     },
     flat: false,
     icon: false,

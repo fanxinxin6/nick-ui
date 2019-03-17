@@ -2,7 +2,7 @@ import './style/index.less'
 import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'ui-ripple',
+  name: 'Ripple',
   props: {
     center: false
   },

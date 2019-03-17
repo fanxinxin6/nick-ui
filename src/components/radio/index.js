@@ -2,7 +2,7 @@ import './style/index.less'
 import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'radio',
+  name: 'Radio',
   props: {
     custom: {
       default: 'primary'
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     isGroup () {
-      return this.$parent.$options.name === `radio-group`
+      return this.$parent.$options.name === `RadioGroup`
     },
     modelValue () {
       return this.isGroup ? this.$parent.modelData : this.modelData

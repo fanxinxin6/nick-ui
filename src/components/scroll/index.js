@@ -83,6 +83,7 @@ const renderTranslateStyle = ({ wrap, move, axis, thumb, clientSize }) => {
   thumb.style.transform = `translate${axis}(${(move / clientSize) * 100}%)`
 }
 const ScrollBar = {
+  name: 'ScrollBar',
   props: ['size', 'vertical', 'move', 'moveSize'],
   computed: {
     bar () {
@@ -211,6 +212,7 @@ const ScrollBar = {
   }
 }
 export default {
+  name: 'Scroll',
   components: {
     ScrollBar
   },
