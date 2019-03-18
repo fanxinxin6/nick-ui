@@ -68,10 +68,10 @@ const updateStyle = () => {
   .${prefix}-${themeName}.${prefix}-${themeName}-flat{
     color:${activeColor};
   }
-  .${prefix}-${themeName}:enabled:hover .${prefix}-inherit-${themeName}{
+  .${prefix}-${themeName}:enabled:hover .${prefix}-inherit-${themeName},.${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}-hover{
     color:${hoverColor};
   }
-  .${prefix}-${themeName}:enabled:active .${prefix}-inherit-${themeName}{
+  .${prefix}-${themeName}:enabled:active .${prefix}-inherit-${themeName},.${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}-active{
     color:${activeColor};
   }
   .${prefix}-${themeName}.${prefix}-${themeName}-flat::before{

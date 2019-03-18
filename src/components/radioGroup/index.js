@@ -1,7 +1,7 @@
 import './style/index.less'
 import Theme from '../../utils/theme'
 export default {
-  name: 'RadioGroup',
+  name: 'nick-radio-group',
   props: {
     modelData: {}
   },

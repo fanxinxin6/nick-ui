@@ -1,7 +1,7 @@
 import './style/index.less'
 import Theme from '../../utils/theme'
 export default {
-  name: 'ButtonGroup',
+  name: 'nick-button-group',
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-button-group`

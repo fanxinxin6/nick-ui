@@ -1,32 +1,18 @@
 import './style/index.less'
-import { prefix } from '..'
-const prefixClass = `${prefix}-switch`
+import Theme from '../../utils/theme'
+import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'ui-switch',
+  name: 'nick-switch',
   props: {
     custom: {
-      type: String,
-      default: 'primary',
-      validator: value => new Set(['primary']).has(value)
+      default: 'primary'
     },
     size: {
-      type: String,
-      default: 'normal',
-      validator: value => new Set(['normal', 'small', 'mendium', 'large', 'auto']).has(value)
+      default: 'normal'
     },
-    shape: {
-      type: String,
-      default: '',
-      validator: value => new Set(['', 'circle', 'round']).has(value)
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
+    disabled: false,
     value: {},
-    modelData: {
-      type: Array
-    }
+    modelData: { }
   },
   model: {
     prop: 'modelData',
@@ -39,7 +25,7 @@ export default {
   },
   computed: {
     isGroup () {
-      return this.$parent.$options._componentTag === `${prefixClass}-group`
+      return this.$parent.$options.name === 'nick-switch-group'
     },
     checked () {
       const { modelData } = (this.isGroup ? this.$parent : this)
@@ -47,14 +33,21 @@ export default {
     }
   },
   render () {
-    const { custom, size, shape, disabled, clicked, $slots, onclick, checked } = this
-    const className = `${prefixClass} ` + [custom, size, shape, clicked ? 'clicked' : ''].map(className => className ? `${prefixClass}-${className}` : '').join(' ')
+    const { prefix } = Theme
+    const prefixClass = `${prefix}-switch`
+    const { checked } = this
+    const custom = checked ? this.custom : 'accent'
+    const customBtn = checked ? `${custom}-hover` : 'accent'
+    const { size, disabled, clicked, $slots, onclick, onmousedown, onmouseup } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, clicked }, prefix, prefixClass)
     const effect = $slots.effect || <div class={`${prefixClass}-effect`}></div>
     return (
-      <button onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
+      <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
-          <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
-            {effect}
+          <div class={`${prefixClass}-wrapper ${prefix}-inherit-${customBtn} display-flex flex-row-center flex-col-center`}>
+            <div onmousedown={onmousedown} onmouseup={onmouseup} class={`${prefixClass}-btn ${prefix}-inherit-${custom}`}>
+              {effect}
+            </div>
           </div>
           <div class={`${prefixClass}-inner`}>
             {$slots.default}
@@ -64,6 +57,32 @@ export default {
     )
   },
   methods: {
+    onmousedown (event) {
+      event.preventDefault()
+      const { container } = this.$refs
+      const { disabled } = this
+      if (disabled || disabled === '') return
+      container.blur()
+      container.addEventListener('animationend', this.animationend)
+      this.effectEnd = false
+      this.hold = true
+      this.clicked = true
+    },
+    onmouseup () {
+      this.hold = false
+      if (this.effectEnd) {
+        if (!this.hold) {
+          this.clicked = false
+        }
+      }
+    },
+    animationend () {
+      this.effectEnd = true
+      if (!this.hold) {
+        this.clicked = false
+      }
+      this.$refs.container.removeEventListener('animationend', this.animationend)
+    },
     onclick (event) {
       const { value } = this
       let modelData = new Set((this.isGroup ? this.$parent : this).modelData)
@@ -79,11 +98,6 @@ export default {
         this.$emit('input', modelData)
       }
       this.$emit('change', modelData, event)
-      if (this.checked) return
-      this.clicked = false
-      setTimeout(() => {
-        this.clicked = true
-      }, 17)
     }
   }
 }

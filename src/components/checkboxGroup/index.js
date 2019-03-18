@@ -1,7 +1,7 @@
 import './style/index.less'
 import Theme from '../../utils/theme'
 export default {
-  name: 'CheckboxGroup',
+  name: 'nick-checkbox-group',
   props: {
     modelData: {}
   },

@@ -52,6 +52,17 @@ html {
       <CheckBox disabled value="3">333</CheckBox>
       </CheckboxGroup>
     </div>
+    <div>
+      <Switch1 v-model="s" value="1"></Switch1>
+      <Switch1 size="small" v-model="s" value="2"></Switch1>
+      <Switch1 custom="error" size="large" v-model="s" value="3"></Switch1>
+      <Switch1 disabled v-model="s" value="4"></Switch1>
+      <Switch1 v-model="s" value="5"></Switch1>
+    </div>
+    <SwitchGroup v-model="s">
+      <Switch1  value="1"></Switch1>
+      <Switch1 size="small"  value="2"></Switch1>
+    </SwitchGroup>
     <div v-if="0">
       <template v-if="1">
         <nick-button disabled>按钮</nick-button>
@@ -142,12 +153,21 @@ import ButtonGroup from './components/buttonGroup/'
 import Radio from './components/radio/'
 import RadioGroup from './components/radioGroup/'
 import CheckBox from './components/checkbox/'
-import CheckboxGroup from './components/checkboxGroup'
+import CheckboxGroup from './components/checkboxGroup/'
+import Switch1 from './components/switch/'
+import SwitchGroup from './components/switchGroup/'
 Theme.prefix = 'nick'
 export default {
   name: 'app',
   components: {
-    Button, ButtonGroup, Radio, RadioGroup, CheckBox, CheckboxGroup
+    Button,
+    ButtonGroup,
+    Radio,
+    RadioGroup,
+    CheckBox,
+    CheckboxGroup,
+    Switch1,
+    SwitchGroup
   },
   data () {
     setTimeout(() => {

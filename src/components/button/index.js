@@ -3,7 +3,7 @@ import Theme from '../../utils/theme'
 import Ripple from '../ripple'
 import { createFrameworkClass } from '../../utils/'
 export default {
-  name: 'Button',
+  name: 'nick-button',
   props: {
     custom: {
       default: 'primary'
