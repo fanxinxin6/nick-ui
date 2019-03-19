@@ -53,6 +53,9 @@ html {
       </CheckboxGroup>
     </div>
     <div>
+      <Toast/>
+    </div>
+    <div>
       <Switch1 v-model="s" value="1"></Switch1>
       <Switch1 size="small" v-model="s" value="2"></Switch1>
       <Switch1 custom="error" size="large" v-model="s" value="3"></Switch1>
@@ -156,6 +159,7 @@ import CheckBox from './components/checkbox/'
 import CheckboxGroup from './components/checkboxGroup/'
 import Switch1 from './components/switch/'
 import SwitchGroup from './components/switchGroup/'
+import Toast from './components/toast/'
 Theme.prefix = 'nick'
 export default {
   name: 'app',
@@ -167,7 +171,8 @@ export default {
     CheckBox,
     CheckboxGroup,
     Switch1,
-    SwitchGroup
+    SwitchGroup,
+    Toast
   },
   data () {
     setTimeout(() => {
@@ -177,7 +182,6 @@ export default {
       r: '1',
       c: ['2'],
       s: ['3'],
-      a: false,
       h: 0,
       a: '2'
     }
