@@ -44,11 +44,11 @@ const updateStyle = () => {
     .${prefix}-${themeName} .${prefix}-ripple{
       color:${baseColor};
     }
-  .${prefix}-${themeName}:enabled::before{
+  .${prefix}-${themeName}:not(:disabled)::before{
     background-color:${themeColor};
     border-color:${themeColor};
   }
-  .${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}{
+  .${prefix}-${themeName}:not(:disabled) .${prefix}-inherit-${themeName}{
     color:${themeColor};
   }
   .${prefix}-${themeName}:disabled::before{
@@ -58,7 +58,7 @@ const updateStyle = () => {
   .${prefix}-${themeName}.${prefix}-${themeName}-outline:disabled{
     color:${disabledColor};
   }
-  .${prefix}-${themeName}.${prefix}-${themeName}-outline:enabled{
+  .${prefix}-${themeName}.${prefix}-${themeName}-outline:not(:disabled){
     color:${activeColor};
     border:1px solid transparent;
   }
@@ -68,26 +68,26 @@ const updateStyle = () => {
   .${prefix}-${themeName}.${prefix}-${themeName}-flat{
     color:${activeColor};
   }
-  .${prefix}-${themeName}:enabled:hover .${prefix}-inherit-${themeName},.${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}-hover{
+  .${prefix}-${themeName}:not(:disabled):hover .${prefix}-inherit-${themeName},.${prefix}-${themeName}:not(:disabled) .${prefix}-inherit-${themeName}-hover{
     color:${hoverColor};
   }
-  .${prefix}-${themeName}:enabled:active .${prefix}-inherit-${themeName},.${prefix}-${themeName}:enabled .${prefix}-inherit-${themeName}-active{
+  .${prefix}-${themeName}:not(:disabled):active .${prefix}-inherit-${themeName},.${prefix}-${themeName}:not(:disabled) .${prefix}-inherit-${themeName}-active{
     color:${activeColor};
   }
   .${prefix}-${themeName}.${prefix}-${themeName}-flat::before{
     background-color:initial;
   }
-  .${prefix}-${themeName}.${prefix}-${themeName}-outline:enabled:hover::before,.${prefix}-${themeName}.${prefix}-${themeName}-flat:enabled:hover::before{
+  .${prefix}-${themeName}.${prefix}-${themeName}-outline:not(:disabled):hover::before,.${prefix}-${themeName}.${prefix}-${themeName}-flat:not(:disabled):hover::before{
     background-color:${outlineHoverColor};
   }
-  .${prefix}-${themeName}.${prefix}-${themeName}-outline:enabled:active::before,.${prefix}-${themeName}.${prefix}-${themeName}-flat:enabled:active::before{
+  .${prefix}-${themeName}.${prefix}-${themeName}-outline:not(:disabled):active::before,.${prefix}-${themeName}.${prefix}-${themeName}-flat:not(:disabled):active::before{
     background-color:${outlineActiveColor};
   }
-  .${prefix}-${themeName}:enabled:hover::before{
+  .${prefix}-${themeName}:not(:disabled):hover::before{
     background-color:${hoverColor};
     border-color:${hoverColor};
   }
-  .${prefix}-${themeName}:enabled:active::before{
+  .${prefix}-${themeName}:not(:disabled):active::before{
     background-color:${activeColor};
     border-color:${activeColor};
   }
