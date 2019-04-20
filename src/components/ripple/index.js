@@ -4,7 +4,10 @@ import { createFrameworkClass } from '../../utils/'
 export default {
   name: 'nick-ripple',
   props: {
-    center: false
+    center: false,
+    custom: {
+      default: 'primary'
+    }
   },
   data () {
     return {
@@ -13,6 +16,7 @@ export default {
   },
   render () {
     const { prefix } = Theme
+    const { custom } = this
     const prefixClass = `${prefix}-ripple`
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
     this.prefixClass = prefixClass
@@ -41,7 +45,7 @@ export default {
         ripple.classList.add(`${prefixClass}-inner-enter`)
         setTimeout(() => {
           if (Date.now() - this.time > delay) {
-            this.show = false
+            // this.show = false
           }
         }, delay)
       }

@@ -14,22 +14,33 @@ export default {
     shape: {
       default: ''
     },
-    flat: false,
-    icon: false,
-    outline: false,
-    disabled: false,
-    ripple: true
+    flat: {
+      default: false
+    },
+    icon: {
+      default: false
+    },
+    outline: {
+      default: false
+    },
+    disabled: {
+      default: false
+    },
+    ripple: {
+      default: true
+    }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-button`
     const { custom, size, shape, disabled, flat, outline, ripple, $slots, onmousedown, onmouseup } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline || flat }, prefix, prefixClass)
-    let effect = $slots.effect || <div disabled={disabled} class={`${prefixClass}-effect ${prefix}-${custom}`}/>
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline === '' || flat === '' ? '' : false }, prefix, prefixClass)
+    const effect = $slots.effect || <div disabled={disabled} class={`${prefixClass}-effect ${prefix}-${custom}`}/>
+    const RippleEffect = ripple ? <Ripple ref="ripple"></Ripple> : null
     return (
       <button onmousedown={onmousedown} onmouseup={onmouseup} disabled={disabled} type="button" class={className}>
         { effect}
-        <Ripple ref="ripple"></Ripple>
+        {RippleEffect}
         <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
           <div class={`${prefixClass}-inner`}>
             {$slots.default}
