@@ -3,7 +3,7 @@ import Color from 'color'
 let prefix = 'nick-ui'
 let theme = {
   primary: '#3f51b5',
-  error: '#f00',
+  error: '#65bccb',
   warn: '#f10',
   accent: '#999',
   text: '#999'
@@ -46,7 +46,7 @@ const updateStyle = () => {
       }
       `
     }
-    const hoverColor = theme[`${themeName}-lighten-4`]
+    const hoverColor = theme[`${themeName}-lighten-3`]
     // const focusColor = theme[`${themeName}-lighten-3`]
     const activeColor = theme[`${themeName}-darken-2`]
     // 每个主题色加亮暗度10个级别
@@ -57,9 +57,7 @@ const updateStyle = () => {
   .${prefix}-${themeName}:enabled:hover .${prefix}-${themeName}{
     color:${hoverColor};
   }
-  .${prefix}-${themeName}:enabled:active .${prefix}-${themeName}{
-    color:${activeColor};
-  }
+  
 `
   }
   style.innerHTML = styleRules

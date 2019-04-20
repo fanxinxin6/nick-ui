@@ -42,21 +42,21 @@ export default {
         const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
         const delay = transitionDelay + transitionDuration
         document.removeEventListener('mouseup', mouseup)
-        ripple.classList.add(`${prefixClass}-inner-enter`)
+        ripple.classList.add(`${prefixClass}-inner-leave`)
         setTimeout(() => {
           if (Date.now() - this.time > delay) {
             // this.show = false
           }
         }, delay)
       }
-      ripple.classList.add(`${prefixClass}-inner`)
       style.width = `${size * 2}px`
       style.height = `${size * 2}px`
       style.left = `${-size + x}px`
       style.top = `${-size + y}px`
+      ripple.classList.add(`${prefixClass}-inner`)
       container.appendChild(ripple)
       setTimeout(() => {
-        ripple.classList.add(`${prefixClass}-inner-leave`)
+        ripple.classList.add(`${prefixClass}-inner-enter`)
       }, 0)
       document.addEventListener('mouseup', mouseup)
     },

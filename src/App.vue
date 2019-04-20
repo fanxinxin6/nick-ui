@@ -19,8 +19,8 @@ html {
   <div id="app" style="padding:100px">
     <Button>按钮1</Button>
     <Button size="small">按钮2</Button>
-    <Button size="large">按钮3</Button>
-    <Button shape="circle" size="small">按钮2</Button>
+    <Button custom="error" size="large">按钮3</Button>
+    <Button  shape="circle" size="small">按钮2</Button>
     <Button shape="circle" size="large">按钮3</Button>
     <Button shape="round" size="small">按钮2</Button>
     <Button shape="round" size="large">按钮3按钮3</Button>
