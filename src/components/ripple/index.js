@@ -8,56 +8,61 @@ export default {
   },
   data () {
     return {
-      innerStyle: {},
-      show: false
+      show: true
     }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-ripple`
-    const { innerStyle, show } = this
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
-    return show ? (
+    this.prefixClass = prefixClass
+    return this.show ? (
       <div ref="container" class={className}>
-        <div style={innerStyle} class={`${prefixClass}-inner`}/>
       </div>
     ) : null
   },
   methods: {
-    animationend () {
-      this.show = false
-      this.$refs.container.removeEventListener('animationend', this.animationend)
-    },
-    rippleClick ({ pageX, pageY }) {
-      this.show = true
-      this.$nextTick(() => {
-        const scale = 2
-        const { prefix } = Theme
-        const prefixClass = `${prefix}-ripple`
-        const { $parent, center } = this
-        const { container } = this.$refs
-        const $parentElement = $parent.$el
-        const { clientWidth, clientHeight } = $parentElement
-        const size = Math.max(clientWidth, clientHeight)
-        const offset = container.getBoundingClientRect()
-        const width = size * scale
-        const height = size * scale
-        const left = center ? -width / 2 + container.clientWidth / 2 : pageX - offset.left - width / 2
-        const top = center ? -height / 2 + container.clientHeight / 2 : pageY - offset.top - height / 2
-        const style = {
-          width: `${width}px`,
-          height: `${height}px`,
-          left: `${left}px`,
-          top: `${top}px`
-        }
-        const showClass = `${prefixClass}-${center ? 'hide' : 'show'}`
-        container.addEventListener('animationend', this.animationend)
-        container.classList.remove(showClass)
+    enter (event) {
+      const { prefixClass } = this
+      const { container } = this.$refs
+      const { clientX, clientY } = event
+      const { width, height, top, left } = container.getBoundingClientRect()
+      const x = clientX - left
+      const y = clientY - top
+      const size = width === height ? width * 1.412 : Math.sqrt(width * width + height * height)
+      const ripple = document.createElement('div')
+      const { style } = ripple
+      const mouseup = () => {
+        const style = getComputedStyle(ripple)
+        const transitionDelay = Math.max(...style.transitionDelay.split(',').map(item => parseFloat(item) * 1000))
+        const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
+        const delay = transitionDelay + transitionDuration
+        document.removeEventListener('mouseup', mouseup)
+        ripple.classList.add(`${prefixClass}-inner-enter`)
         setTimeout(() => {
-          container.classList.add(showClass)
-        }, 17)
-        this.innerStyle = style
+          if (Date.now() - this.time > delay) {
+            this.show = false
+          }
+        }, delay)
+      }
+      ripple.classList.add(`${prefixClass}-inner`)
+      style.width = `${size * 2}px`
+      style.height = `${size * 2}px`
+      style.left = `${-size + x}px`
+      style.top = `${-size + y}px`
+      container.appendChild(ripple)
+      setTimeout(() => {
+        ripple.classList.add(`${prefixClass}-inner-leave`)
+      }, 0)
+      document.addEventListener('mouseup', mouseup)
+    },
+    rippleShow (event) {
+      this.show = true
+      this.time = Date.now()
+      this.$nextTick(() => {
+        this.enter(event)
       })
     }
   }
 }
+// 点击创建元素  动画结束则消失  或者

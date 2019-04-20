@@ -17,17 +17,19 @@ export default {
     flat: false,
     icon: false,
     outline: false,
-    disabled: false
+    disabled: false,
+    ripple: true
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-button`
-    const { custom, size, shape, disabled, flat, outline, $slots, onclick } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline }, prefix, prefixClass)
-    let effect = $slots.effect || <Ripple ref="effect" class={`${prefixClass}-effect`}/>
+    const { custom, size, shape, disabled, flat, outline, ripple, $slots, onmousedown, onmouseup } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline || flat }, prefix, prefixClass)
+    let effect = $slots.effect || <div disabled={disabled} class={`${prefixClass}-effect ${prefix}-${custom}`}/>
     return (
-      <button onclick={onclick} disabled={disabled} type="button" class={className}>
+      <button onmousedown={onmousedown} onmouseup={onmouseup} disabled={disabled} type="button" class={className}>
         { effect}
+        <Ripple ref="ripple"></Ripple>
         <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
           <div class={`${prefixClass}-inner`}>
             {$slots.default}
@@ -37,12 +39,24 @@ export default {
     )
   },
   methods: {
-    onclick (event) {
-      const { effect } = this.$refs
-      this.$emit('click', event)
-      if (effect && effect.rippleClick) {
-        effect.rippleClick(event)
+    onmousedown (event) {
+      const { ripple } = this.$refs
+      if (ripple && ripple.rippleShow) {
+        ripple.rippleShow(event)
       }
+    },
+    onmouseup () {
+      const { ripple } = this.$refs
+      if (ripple && ripple.rippleHide) {
+        ripple.rippleHide(event)
+      }
+    },
+    onclick (event) {
+      // const { ripple } = this.$refs
+      this.$emit('click', event)
+      // if (ripple && ripple.rippleClick) {
+      //   ripple.rippleClick(event)
+      // }
     }
   }
 }

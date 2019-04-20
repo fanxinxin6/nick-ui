@@ -2,7 +2,7 @@ import '../assets/style/common/index.less'
 import Color from 'color'
 let prefix = 'nick-ui'
 let theme = {
-  primary: '#3f51b5',
+  primary: '#65BCCB',
   error: '#f00',
   warn: '#f10',
   accent: '#999',
@@ -25,6 +25,9 @@ const updateStyle = () => {
   let styleRules = ''
   for (let [themeName, themeColor] of Object.entries(theme)) {
     const baseColor = Color(themeColor)
+    const disabledColor = baseColor.grayscale(1)
+    const outlineHoverColor = baseColor.lighten(outlineHoverBrightness).hex()
+    const outlineActiveColor = baseColor.lighten(outlineActiveDarkness).hex()
     for (let i = 1; i <= 10; i++) {
       const num = i * 0.05
       const lightenColor = baseColor.lighten(num).hex()
@@ -46,13 +49,13 @@ const updateStyle = () => {
       }
       `
     }
-    const hoverColor = theme[`${themeName}-lighten-4`]
+    const hoverColor = theme[`${themeName}-lighten-2`]
     // const focusColor = theme[`${themeName}-lighten-3`]
     const activeColor = theme[`${themeName}-darken-2`]
     // 每个主题色加亮暗度10个级别
     styleRules += `
-  .${prefix}-${themeName}:enabled .${prefix}-${themeName},.${prefix}-${themeName}-currentColor{
-    color:${baseColor};
+  .${prefix}-${themeName}:enabled .${prefix}-${themeName}{
+    color:${themeColor};
   }
   .${prefix}-${themeName}:enabled:hover .${prefix}-${themeName}{
     color:${hoverColor};

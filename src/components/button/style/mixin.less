@@ -1,87 +1,151 @@
 .button() {
-  outline: 0;
-  cursor: pointer;
-  color: #fff;
-  border: 0;
-  position: relative;
-  border-radius: @button-border-radius-base;
-  user-select: none;
-  transition:@transition-duration-base @transition-timing;
-  &::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    color: inherit;
-    transition: inherit;
-    border:inherit;
+    outline: 0;
+    cursor: pointer;
+    border: 0;
+    position: relative;
+    border-radius: @button-border-radius-base;
+    user-select: none;
     box-sizing: border-box;
-    border-radius: inherit;
-  }
+    border: 1px solid transparent;
+    transition: @transition-duration-base @transition-timing;
 }
-.button-wrapper() {
-  &-wrapper {
-    height: 100%;
-    border-radius: inherit;
-    position: relative;
-  }
-}
-.button-effect() {
-  &-effect {
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    border-radius: inherit;
-    position: absolute;
-    background-color: @primary-color-hover;
-    border: 6px solid @primary-color-hover;
-  }
-}
-.button-inner() {
-  &-inner {
-    position: relative;
-    border-radius: inherit;
-  }
-}
+
 .button-size() {
-  &-auto {
-  }
-  &-normal {
-    .@{prefix}-button-wrapper {
-      padding: 4px 32px;
+    &-normal {
+        .@{prefix}-button-wrapper {
+            padding: 4px 32px;
+        }
     }
-  }
-  &-small {
-    width: 114px;
-    height: 32px;
-    &.@{prefix}-button-circle {
-      width: 32px;
+
+    &-small {
+        min-width: 114px;
+        height: 32px;
+
+        &.@{prefix}-button-circle {
+            min-width: 32px;
+            min-height: 32px;
+        }
     }
-  }
-  &-large {
-    width: 200px;
-    height: 40px;
-    &.@{prefix}-button-circle {
-      height: 200px;
+
+    &-large {
+        min-width: 200px;
+        height: 40px;
+
+        &.@{prefix}-button-circle {
+            min-width: 64px;
+            min-height: 64px;
+        }
     }
-  }
 }
+
 .button-shape() {
-  &-circle {
-    border-radius: 50%;
-  }
-  &-round {
-    border-radius: 30px;
-  }
+    &-circle {
+        border-radius: 50%;
+    }
+
+    &-round {
+        border-radius: 30px;
+    }
 }
+
+
+.button-effect() {
+    &-effect {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        color: inherit;
+        transition: inherit;
+        position: absolute;
+        border: inherit;
+        box-sizing: border-box;
+        border-radius: inherit;
+        background-color: currentColor;
+    }
+}
+
 .button-disabled() {
-  &:disabled {
-    cursor: not-allowed;
-  }
+    &:disabled {
+        cursor: not-allowed;
+    }
 }
-.button-outline(){
+
+.button-wrapper() {
+    &-wrapper {
+        height: 100%;
+        border-radius: inherit;
+        position: relative;
+        box-sizing: border-box;
+    }
+}
+
+.button-inner() {
+    &-inner {
+        position: relative;
+        border-radius: inherit;
+    }
+}
+
+.button-not-outline() {
+    &:not(.@{prefix}-button-outline):not(.@{prefix}-button-flat) {
+        color: #fff;
+    }
+}
+
+.button-outline() {
+    &-outline {
+        &:enabled {
+            .@{prefix}-button-effect {
+                background-color: transparent;
+                border-color: currentColor;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.2;
+                    border-radius: inherit;
+                    transition: inherit;
+                }
+            }
+
+            &:hover {
+                .@{prefix}-button-effect {
+                    &::before {
+                        background-color: currentColor;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.button-flat() {
+    &-flat {
+        &:enabled {
+            .@{prefix}-button-effect {
+                background-color: transparent;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    opacity: 0.2;
+                    border-radius: inherit;
+                    transition: inherit;
+                }
+            }
+
+            &:hover {
+                .@{prefix}-button-effect {
+                    &::before {
+                        background-color: currentColor;
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,6 +1,6 @@
 export const createFrameworkClass = (props = {}, prefix, prefixClass = 'nick') => {
   const className = new Set()
-  const themeClass = new Set(['custom', 'outline', 'flat'])
+  const themeClass = new Set(['custom', 'currentColor'])
   for (let [key, value] of Object.entries(props)) {
     if (value === true || value === '') {
       if (themeClass.has(key)) {
