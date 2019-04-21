@@ -1,6 +1,7 @@
 import './style/index.less'
-import Theme from '../../utils/theme'
-import { createFrameworkClass } from '../../utils/'
+import Theme from '../../utils/theme.js'
+import { createFrameworkClass } from '../../utils/index.js'
+import Ripple from '../ripple/index.js'
 export default {
   name: 'nick-radio',
   props: {
@@ -10,7 +11,12 @@ export default {
     size: {
       default: 'normal'
     },
-    disabled: false,
+    disabled: {
+      default: false
+    },
+    ripple: {
+      default: true
+    },
     value: {},
     modelData: {}
   },
@@ -37,48 +43,36 @@ export default {
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-radio`
-    const { checked } = this
+    const { checked, ripple } = this
     const custom = checked ? this.custom : 'accent'
-    const { size, disabled, clicked, $slots, onclick, onmousedown, onmouseup } = this
+    const { size, disabled, clicked, $slots, onclick, onmousedown } = this
     const className = createFrameworkClass({ [prefixClass]: true, custom, size, clicked }, prefix, prefixClass)
-    let effect = $slots.effect || <div class={`${prefixClass}-effect`}/>
+    const RippleEffect = ripple ? <div class={`${prefixClass}-effect-ripple`}><Ripple center={true} ref="ripple"></Ripple></div> : null
+    const effect = $slots.effect || <div onmousedown={onmousedown} class={`${prefixClass}-effect ${prefix}-${custom} display-flex flex-row-center flex-col-center`}>{RippleEffect}<div class={`${prefixClass}-effect-inner`}></div></div>
     this.prefixClass = prefixClass
     return (
       <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
-          <div onmousedown={onmousedown} onmouseup={onmouseup} class={`${prefixClass}-wrapper ${prefix}-inherit-${custom} display-flex flex-row-center flex-col-center`}>
-            {effect}
-          </div>
-          <div class={`${prefixClass}-inner`}>
-            {$slots.default}
+          {effect}
+          <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>
+            <div class={`${prefixClass}-inner`}>
+              {$slots.default}
+            </div>
           </div>
         </div>
       </button>
     )
   },
   methods: {
-    onmousedown () {
+    onmousedown (event) {
       const { disabled } = this
-      if (disabled || disabled === '') return
-      this.effectEnd = false
-      this.hold = true
-      this.$refs.container.addEventListener('animationend', this.animationend)
-      this.clicked = true
-    },
-    onmouseup () {
-      this.hold = false
-      if (this.effectEnd) {
-        if (!this.hold) {
-          this.clicked = false
-        }
+      if (disabled || disabled === '') {
+        return
       }
-    },
-    animationend () {
-      this.effectEnd = true
-      if (!this.hold) {
-        this.clicked = false
+      const { ripple } = this.$refs
+      if (ripple && ripple.rippleShow) {
+        ripple.rippleShow(event)
       }
-      this.$refs.container.removeEventListener('animationend', this.animationend)
     },
     onclick (event) {
       const { value, modelValue } = this

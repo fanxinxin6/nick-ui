@@ -49,6 +49,8 @@ const updateStyle = () => {
     const hoverColor = theme[`${themeName}-lighten-3`]
     // const focusColor = theme[`${themeName}-lighten-3`]
     const activeColor = theme[`${themeName}-darken-2`]
+    const disabledColor = 'rgba(0,0,0,0.12)'// theme[`${themeName}-lighten-8`]
+    const disabledCurrentColor = 'rgba(0,0,0,0.26)'
     // 每个主题色加亮暗度10个级别
     styleRules += `
   .${prefix}-${themeName}:enabled .${prefix}-${themeName},.${prefix}-${themeName}-currentColor{
@@ -56,6 +58,12 @@ const updateStyle = () => {
   }
   .${prefix}-${themeName}:enabled:hover .${prefix}-${themeName}{
     color:${hoverColor};
+  }
+  .${prefix}-${themeName}:disabled .${prefix}-${themeName}{
+    color:${disabledColor};
+  }
+  .${prefix}-${themeName}:disabled.${prefix}-${themeName}-currentColor{
+    color:${disabledCurrentColor};
   }
   
 `

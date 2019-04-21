@@ -17,21 +17,32 @@ html {
 
 <template>
   <div id="app" style="padding:100px">
-    <Button>按钮1</Button>
-    <Button size="small">按钮2</Button>
-    <Button custom="error" size="large">按钮3</Button>
-    <Button  shape="circle" size="small">按钮2</Button>
-    <Button shape="circle" size="large">按钮3</Button>
-    <Button shape="round" size="small">按钮2</Button>
-    <Button shape="round" size="large">按钮3按钮3</Button>
-    <Button shape="round" >按钮3按钮3按钮3按钮3</Button>
-    <Button outline>按钮2</Button>
-    <Button outline size="small">按钮2</Button>
-    <Button outline size="large">按钮2</Button>
-    <Button outline>按钮2</Button>
-    <Button flat size="small">按钮2</Button>
-    <Button flat size="large">按钮2</Button>
-    <Button style="width:100px;height:32px" flat>按钮2</Button>
+    <div class="button-test">
+      <button-group>
+        <Button>按钮1</Button>
+        <Button size="small">按钮2</Button>
+        <Button disabled custom="error" size="large">按钮3</Button>
+        <Button shape="circle" size="small">按钮2</Button>
+        <Button shape="circle" size="large">按钮3</Button>
+      </button-group>
+      <Button shape="round" size="small">按钮2</Button>
+      <Button shape="round" size="large">按钮3按钮3</Button>
+      <Button shape="round">按钮3按钮3按钮3按钮3</Button>
+      <Button outline>按钮2</Button>
+      <Button outline size="small">按钮2</Button>
+      <Button outline size="large">按钮2</Button>
+      <Button outline>按钮2</Button>
+      <Button flat size="small">按钮2</Button>
+      <Button flat size="large">按钮2</Button>
+      <Button flat>按钮2</Button>
+    </div>
+    <div class="radio-test">
+      <Radio v-model="r" value="1">1111</Radio>
+      <Radio size="small" v-model="r" value="2">2222</Radio>
+      <Radio size="large" v-model="r" value="3">3333</Radio>
+      <Radio size="large" disabled v-model="r" value="3">444</Radio>
+      <Radio size="large" v-model="r" value="5">555</Radio>
+    </div>
   </div>
 </template>
 

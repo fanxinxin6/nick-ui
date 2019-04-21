@@ -1,7 +1,7 @@
 import './style/index.less'
-import Theme from '../../utils/theme'
-import Ripple from '../ripple'
-import { createFrameworkClass } from '../../utils/'
+import Theme from '../../utils/theme.js'
+import Ripple from '../ripple/index.js'
+import { createFrameworkClass } from '../../utils/index.js'
 export default {
   name: 'nick-button',
   props: {
@@ -34,7 +34,7 @@ export default {
     const { prefix } = Theme
     const prefixClass = `${prefix}-button`
     const { custom, size, shape, disabled, flat, outline, ripple, $slots, onmousedown, onmouseup } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline === '' || flat === '' ? '' : false }, prefix, prefixClass)
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline === '' || flat === '' || disabled === '' ? '' : false }, prefix, prefixClass)
     const effect = $slots.effect || <div disabled={disabled} class={`${prefixClass}-effect ${prefix}-${custom}`}/>
     const RippleEffect = ripple ? <Ripple ref="ripple"></Ripple> : null
     return (
@@ -63,11 +63,7 @@ export default {
       }
     },
     onclick (event) {
-      // const { ripple } = this.$refs
       this.$emit('click', event)
-      // if (ripple && ripple.rippleClick) {
-      //   ripple.rippleClick(event)
-      // }
     }
   }
 }

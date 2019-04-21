@@ -4,9 +4,8 @@ import { createFrameworkClass } from '../../utils/'
 export default {
   name: 'nick-ripple',
   props: {
-    center: false,
-    custom: {
-      default: 'primary'
+    center: {
+      default: false
     }
   },
   data () {
@@ -16,9 +15,9 @@ export default {
   },
   render () {
     const { prefix } = Theme
-    const { custom } = this
     const prefixClass = `${prefix}-ripple`
-    const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
+    const { center } = this
+    const className = createFrameworkClass({ [prefixClass]: true, center }, prefix, prefixClass)
     this.prefixClass = prefixClass
     return this.show ? (
       <div ref="container" class={className}>
@@ -27,7 +26,7 @@ export default {
   },
   methods: {
     enter (event) {
-      const { prefixClass } = this
+      const { prefixClass, center } = this
       const { container } = this.$refs
       const { clientX, clientY } = event
       const { width, height, top, left } = container.getBoundingClientRect()
@@ -45,14 +44,14 @@ export default {
         ripple.classList.add(`${prefixClass}-inner-leave`)
         setTimeout(() => {
           if (Date.now() - this.time > delay) {
-            // this.show = false
+            this.show = false
           }
         }, delay)
       }
       style.width = `${size * 2}px`
       style.height = `${size * 2}px`
-      style.left = `${-size + x}px`
-      style.top = `${-size + y}px`
+      style.left = `${center ? width / 2 - size : -size + x}px`
+      style.top = `${center ? height / 2 - size : -size + y}px`
       ripple.classList.add(`${prefixClass}-inner`)
       container.appendChild(ripple)
       setTimeout(() => {

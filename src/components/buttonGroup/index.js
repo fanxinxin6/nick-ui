@@ -1,5 +1,5 @@
 import './style/index.less'
-import Theme from '../../utils/theme'
+import Theme from '../../utils/theme.js'
 export default {
   name: 'nick-button-group',
   render () {

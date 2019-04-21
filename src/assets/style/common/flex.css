@@ -1,6 +1,9 @@
 .display-flex {
   display: flex;
 }
+.display-inline-flex{
+  display: inline-flex;
+}
 .inherit-height {
   height: inherit;
 }
