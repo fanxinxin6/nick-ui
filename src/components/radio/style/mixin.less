@@ -1,74 +1,83 @@
 .radio() {
-  outline: 0;
-  cursor: pointer;
-  position: relative;
-  user-select: none;
-  border: 0;
-}
-.radio-effect(){
-  &-effect{
-    border-radius: 50%;
+    outline: 0;
+    cursor: pointer;
     position: relative;
-    box-sizing: border-box;
-    border: 1px solid currentColor;
-  }
+    user-select: none;
+    border: 0;
 }
-.radio-effect-ripple(){
-  &-effect-ripple{
-    left: 50%;
-    top: 50%;
-    width: 250%;
-    height: 250%;
-    transform: translate(-50%,-50%);
-    border-radius: 50%;
-    position: absolute;
-  }
+
+.radio-effect() {
+    &-effect {
+        border-radius: 50%;
+        position: relative;
+        box-sizing: border-box;
+        border: 1px solid currentColor;
+    }
 }
-.radio-effect-inner(){
-  &-effect-inner{
-    width: 100%;
-    height: 100%;
-    display: block;
-    transform: scale(0.6);
-    border-radius: inherit;
-    box-sizing: border-box;
-    background: currentColor;
-    transition: inherit;
-    display: none;
-  }
+
+.radio-effect-ripple() {
+    &-effect-ripple {
+        left: 50%;
+        top: 50%;
+        width: 250%;
+        height: 250%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        position: absolute;
+    }
 }
+
+.radio-effect-inner() {
+    &-effect-inner {
+        width: 100%;
+        height: 100%;
+        display: block;
+        transform: scale(0.6);
+        border-radius: inherit;
+        box-sizing: border-box;
+        background: currentColor;
+        transition: inherit;
+        display: none;
+    }
+}
+
 .radio-size() {
-  &-normal {
-    .@{prefix}-radio-effect {
-      width: 16px;
-      height: 16px;
+    &-normal {
+        .@{prefix}-radio-effect {
+            width: 16px;
+            height: 16px;
+        }
     }
-  }
-  &-small {
-    .@{prefix}-radio-effect {
-      width: 18px;
-      height: 18px;
+
+    &-small {
+        .@{prefix}-radio-effect {
+            width: 18px;
+            height: 18px;
+        }
     }
-  }
-  &-large {
-    .@{prefix}-radio-effect {
-      width: 20px;
-      height: 20px;
+
+    &-large {
+        .@{prefix}-radio-effect {
+            width: 20px;
+            height: 20px;
+        }
     }
-  }
 }
-.radio-checked(){
-  &[checked]{ 
-    .@{prefix}-radio-effect-inner {
-    display: block;
+
+.radio-checked() {
+    &[checked] {
+        .@{prefix}-radio-effect-inner {
+            display: block;
+        }
     }
-  }
 }
+
 .radio-disabled() {
-  &:disabled {
-    cursor: not-allowed;
-  }
+    &:disabled {
+        cursor: not-allowed;
+    }
 }
+
 // .radio-wrapper() {
 //   &-wrapper {
 //     border-radius: 50%;

@@ -3,11 +3,6 @@ import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/'
 export default {
   name: 'nick-ripple',
-  props: {
-    center: {
-      default: false
-    }
-  },
   data () {
     return {
       show: true
@@ -16,8 +11,7 @@ export default {
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-ripple`
-    const { center } = this
-    const className = createFrameworkClass({ [prefixClass]: true, center }, prefix, prefixClass)
+    const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
     this.prefixClass = prefixClass
     return this.show ? (
       <div ref="container" class={className}>
@@ -26,7 +20,7 @@ export default {
   },
   methods: {
     enter (event) {
-      const { prefixClass, center } = this
+      const { prefixClass } = this
       const { container } = this.$refs
       const { clientX, clientY } = event
       const { width, height, top, left } = container.getBoundingClientRect()
@@ -35,6 +29,7 @@ export default {
       const size = width === height ? width * 1.412 : Math.sqrt(width * width + height * height)
       const ripple = document.createElement('div')
       const { style } = ripple
+      const center = width === height
       const mouseup = () => {
         const style = getComputedStyle(ripple)
         const transitionDelay = Math.max(...style.transitionDelay.split(',').map(item => parseFloat(item) * 1000))
@@ -68,4 +63,3 @@ export default {
     }
   }
 }
-// 点击创建元素  动画结束则消失  或者

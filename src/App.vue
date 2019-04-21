@@ -39,9 +39,27 @@ html {
     <div class="radio-test">
       <Radio v-model="r" value="1">1111</Radio>
       <Radio size="small" v-model="r" value="2">2222</Radio>
-      <Radio size="large" v-model="r" value="3">3333</Radio>
+      <Radio custom="accent" size="large" v-model="r" value="3">3333</Radio>
       <Radio size="large" disabled v-model="r" value="3">444</Radio>
       <Radio size="large" v-model="r" value="5">555</Radio>
+      <radio-group  v-model="r">
+        <Radio size="small" value="2">2222</Radio>
+        <Radio custom="accent" size="large" value="3">3333</Radio>
+        <Radio size="large" disabled value="3">444</Radio>
+        <Radio size="large" value="5">555</Radio>
+      </radio-group>
+    </div>
+    <div class="checkbox-test">
+      <CheckBox v-model="c" value="1">c11111</CheckBox>
+      <CheckBox disabled v-model="c" value="2">c2222</CheckBox>
+      <CheckBox v-model="c" value="3">c33333</CheckBox>
+      <CheckBox v-model="c" value="4">c4444</CheckBox>
+      <checkbox-group v-model="c">
+        <CheckBox value="1">1111</CheckBox>
+        <CheckBox value="2">1111</CheckBox>
+        <CheckBox value="3">1111</CheckBox>
+        <CheckBox value="4">1111</CheckBox>
+      </checkbox-group>
     </div>
   </div>
 </template>
