@@ -1,6 +1,7 @@
 import './style/index.less'
-import Theme from '../../utils/theme'
-import { createFrameworkClass } from '../../utils/'
+import Theme from '../../utils/theme.js'
+import { createFrameworkClass } from '../../utils/index.js'
+import Ripple from '../ripple/index.js'
 export default {
   name: 'nick-switch',
   props: {
@@ -10,9 +11,14 @@ export default {
     size: {
       default: 'normal'
     },
-    disabled: false,
+    disabled: {
+      default: false
+    },
+    ripple: {
+      default: true
+    },
     value: {},
-    modelData: { }
+    modelData: {}
   },
   model: {
     prop: 'modelData',
@@ -20,7 +26,7 @@ export default {
   },
   data () {
     return {
-      clicked: false
+      status: false
     }
   },
   computed: {
@@ -29,28 +35,26 @@ export default {
     },
     checked () {
       const { modelData } = (this.isGroup ? this.$parent : this)
-      return new Set(modelData).has(this.value)
+      return modelData ? new Set(modelData).has(this.value) : this.status
     }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-switch`
-    const { checked } = this
+    const { checked, ripple } = this
     const custom = checked ? this.custom : 'accent'
-    const customBtn = checked ? `${custom}-hover` : 'accent'
-    const { size, disabled, clicked, $slots, onclick, onmousedown, onmouseup } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size, clicked }, prefix, prefixClass)
-    const effect = $slots.effect || <div class={`${prefixClass}-effect`}></div>
+    const { size, disabled, $slots, onclick, onmousedown } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
+    const RippleEffect = ripple ? <div class={`${prefixClass}-effect-ripple`}><Ripple ref="ripple"></Ripple></div> : null
+    const effect = $slots.effect || <div class={`${prefixClass}-effect ${prefix}-${custom} display-flex flex-row-center flex-col-center`}><div onmousedown={onmousedown} class={`${prefixClass}-effect-inner`}>{RippleEffect}</div></div>
     return (
       <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
-          <div class={`${prefixClass}-wrapper ${prefix}-inherit-${customBtn} display-flex flex-row-center flex-col-center`}>
-            <div onmousedown={onmousedown} onmouseup={onmouseup} class={`${prefixClass}-btn ${prefix}-inherit-${custom}`}>
-              {effect}
+          {effect}
+          <div class={`${prefixClass}-wrapper  display-flex flex-row-center flex-col-center`}>
+            <div class={`${prefixClass}-inner`}>
+              {$slots.default}
             </div>
-          </div>
-          <div class={`${prefixClass}-inner`}>
-            {$slots.default}
           </div>
         </div>
       </button>
@@ -58,46 +62,37 @@ export default {
   },
   methods: {
     onmousedown (event) {
-      event.preventDefault()
-      const { container } = this.$refs
       const { disabled } = this
-      if (disabled || disabled === '') return
-      container.blur()
-      container.addEventListener('animationend', this.animationend)
-      this.effectEnd = false
-      this.hold = true
-      this.clicked = true
-    },
-    onmouseup () {
-      this.hold = false
-      if (this.effectEnd) {
-        if (!this.hold) {
-          this.clicked = false
-        }
+      if (disabled || disabled === '') {
+        return
       }
-    },
-    animationend () {
-      this.effectEnd = true
-      if (!this.hold) {
-        this.clicked = false
+      const { ripple } = this.$refs
+      if (ripple && ripple.rippleShow) {
+        ripple.rippleShow(event)
       }
-      this.$refs.container.removeEventListener('animationend', this.animationend)
     },
     onclick (event) {
-      const { value } = this
-      let modelData = new Set((this.isGroup ? this.$parent : this).modelData)
-      if (modelData.has(value)) {
-        modelData.delete(value)
+      const { value, isGroup } = this
+      let { modelData } = this
+      modelData = isGroup || modelData ? new Set((isGroup ? this.$parent : this).modelData) : modelData
+      if (modelData === undefined) {
+        modelData = !this.status
+        this.status = modelData
       } else {
-        modelData.add(value)
+        if (modelData.has(value)) {
+          modelData.delete(value)
+        } else {
+          modelData.add(value)
+        }
+        modelData = [...modelData]
       }
-      modelData = [...modelData]
-      if (this.isGroup) {
+      if (isGroup) {
         this.$parent.$emit('input', modelData)
       } else {
         this.$emit('input', modelData)
       }
       this.$emit('change', modelData, event)
     }
+
   }
 }

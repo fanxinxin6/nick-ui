@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     enter (event) {
+      if (event.button !== 0) return
       const { prefixClass } = this
       const { container } = this.$refs
       const { clientX, clientY } = event

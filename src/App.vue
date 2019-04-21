@@ -50,16 +50,21 @@ html {
       </radio-group>
     </div>
     <div class="checkbox-test">
-      <CheckBox v-model="c" value="1">c11111</CheckBox>
+      <CheckBox @change="c1" value="1">c11111</CheckBox>
       <CheckBox disabled v-model="c" value="2">c2222</CheckBox>
-      <CheckBox v-model="c" value="3">c33333</CheckBox>
+      <CheckBox @change="c1" v-model="c" value="3">c33333</CheckBox>
       <CheckBox v-model="c" value="4">c4444</CheckBox>
       <checkbox-group v-model="c">
-        <CheckBox value="1">1111</CheckBox>
+        <CheckBox @change="c1" value="1">1111</CheckBox>
         <CheckBox value="2">1111</CheckBox>
         <CheckBox value="3">1111</CheckBox>
         <CheckBox value="4">1111</CheckBox>
       </checkbox-group>
+    </div>
+    <div class="switch-test">
+      <Switch1  value="1">asdfds</Switch1>
+      <Switch1 size="small" v-model="c" value="2">asdfds</Switch1>
+      <Switch1 size="large" v-model="c" value="3">asdfds</Switch1>
     </div>
   </div>
 </template>
@@ -101,6 +106,9 @@ export default {
     }
   },
   methods: {
+    c1 (a) {
+      console.log(a)
+    },
     msg () {
       const { t1, t2 } = this.$refs
       t2.message({

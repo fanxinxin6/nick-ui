@@ -28,7 +28,7 @@ export default {
   },
   data () {
     return {
-      clicked: false
+      status: false
     }
   },
   computed: {
@@ -37,7 +37,7 @@ export default {
     },
     checked () {
       const { modelData } = (this.isGroup ? this.$parent : this)
-      return new Set(modelData).has(this.value)
+      return modelData ? new Set(modelData).has(this.value) : this.status
     }
   },
   render () {
@@ -45,8 +45,8 @@ export default {
     const prefixClass = `${prefix}-checkbox`
     const { checked, ripple } = this
     const custom = checked ? this.custom : 'accent'
-    const { size, disabled, clicked, $slots, onclick, onmousedown } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size, clicked }, prefix, prefixClass)
+    const { size, disabled, $slots, onclick, onmousedown } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
     const RippleEffect = ripple ? <div class={`${prefixClass}-effect-ripple`}><Ripple ref="ripple"></Ripple></div> : null
     const effect = $slots.effect || <div onmousedown={onmousedown} class={`${prefixClass}-effect ${prefix}-${custom} display-flex flex-row-center flex-col-center`}>{RippleEffect}<div class={`${prefixClass}-effect-inner`}></div></div>
 
@@ -75,15 +75,21 @@ export default {
       }
     },
     onclick (event) {
-      const { value } = this
-      let modelData = new Set((this.isGroup ? this.$parent : this).modelData)
-      if (modelData.has(value)) {
-        modelData.delete(value)
+      const { value, isGroup } = this
+      let { modelData } = this
+      modelData = isGroup || modelData ? new Set((isGroup ? this.$parent : this).modelData) : modelData
+      if (modelData === undefined) {
+        modelData = !this.status
+        this.status = modelData
       } else {
-        modelData.add(value)
+        if (modelData.has(value)) {
+          modelData.delete(value)
+        } else {
+          modelData.add(value)
+        }
+        modelData = [...modelData]
       }
-      modelData = [...modelData]
-      if (this.isGroup) {
+      if (isGroup) {
         this.$parent.$emit('input', modelData)
       } else {
         this.$emit('input', modelData)
