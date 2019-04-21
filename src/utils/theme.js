@@ -56,7 +56,7 @@ const updateStyle = () => {
   .${prefix}-${themeName}:enabled .${prefix}-${themeName},.${prefix}-${themeName}-currentColor{
     color:${baseColor};
   }
-  .${prefix}-${themeName}:enabled:hover .${prefix}-${themeName}{
+  .${prefix}-${themeName}:enabled:hover .${prefix}-${themeName}:not(.${prefix}-${themeName}-nohover){
     color:${hoverColor};
   }
   .${prefix}-${themeName}:disabled .${prefix}-${themeName}{

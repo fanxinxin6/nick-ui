@@ -63,7 +63,7 @@ html {
     </div>
     <div class="switch-test">
       <Switch1  value="1">asdfds</Switch1>
-      <Switch1 size="small" v-model="c" value="2">asdfds</Switch1>
+      <Switch1 custom="error" size="small" v-model="c" value="2">asdfds</Switch1>
       <Switch1 size="large" v-model="c" value="3">asdfds</Switch1>
     </div>
   </div>

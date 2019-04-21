@@ -45,8 +45,10 @@ export default {
     const custom = checked ? this.custom : 'accent'
     const { size, disabled, $slots, onclick, onmousedown } = this
     const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
-    const RippleEffect = ripple ? <div class={`${prefixClass}-effect-ripple`}><Ripple ref="ripple"></Ripple></div> : null
-    const effect = $slots.effect || <div class={`${prefixClass}-effect ${prefix}-${custom} display-flex flex-row-center flex-col-center`}><div onmousedown={onmousedown} class={`${prefixClass}-effect-inner`}>{RippleEffect}</div></div>
+    const customClass = `${prefix}-${custom}`
+    const customNoHover = `${customClass}-nohover`
+    const RippleEffect = ripple ? <div class={`${customClass} ${prefixClass}-effect-ripple`}><Ripple ref="ripple"></Ripple></div> : null
+    const effect = $slots.effect || <div class={`${prefixClass}-effect ${customClass}${checked ? '-lighten-8' : ''} display-flex flex-row-center flex-col-center`}><div onmousedown={onmousedown} class={`${prefixClass}-effect-inner ${customClass} ${customNoHover}`}>{RippleEffect}</div></div>
     return (
       <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
