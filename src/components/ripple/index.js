@@ -5,7 +5,7 @@ export default {
   name: 'nick-ripple',
   data () {
     return {
-      show: true
+      show: false
     }
   },
   render () {
