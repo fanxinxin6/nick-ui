@@ -74,7 +74,7 @@ html {
       </Popover>
     </div>
     <div class="tooltip-test">
-      <Tooltip tooltip-class="fff" class="afb" placement="right" content="afasd">
+      <Tooltip  tooltip-class="fff" class="afb" placement="right" content="afasd">
         <Button  size="small">按钮2</Button>
       </Tooltip>
     </div>

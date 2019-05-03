@@ -4,7 +4,7 @@ import { createFrameworkClass } from '../../utils/index.js'
 import Vue from 'vue'
 const Popover = Vue.extend({
   name: 'nick-popover',
-  props: ['reference', 'content', 'placement', 'visible', 'openDelay', 'custom', 'popoverClass'],
+  props: ['reference', 'content', 'placement', 'visible', 'openDelay', 'custom', 'popoverClass', 'offset', 'autoPosition'],
   data () {
     return {
       isEnter: false,
@@ -62,6 +62,7 @@ const Popover = Vue.extend({
       const { popover } = this.$refs
       if (!popover.parentNode) {
         document.body.appendChild(popover)
+        this.onEnter()
       }
     },
     removePopover () {
@@ -78,7 +79,8 @@ const Popover = Vue.extend({
     },
     position () {
       const { popover } = this.$refs
-      const { reference, placement = 'center' } = this
+      const { reference, placement = 'center', offset = {}, autoPosition } = this
+      const { x: offsetX, y: offsetY } = offset
       const { offsetWidth, offsetHeight } = popover
       const { clientWidth, clientHeight } = document.documentElement
       const { width, height, left, right, top, bottom } = reference.getBoundingClientRect()
@@ -98,8 +100,12 @@ const Popover = Vue.extend({
       let yIndex = placementArr.findIndex(value => /(top|bottom)/.test(value))
       let x = positionMap[placementArr[xIndex]] || hCenter
       let y = positionMap[placementArr[yIndex]] || vCenter
-      x = x < minX || x > maxX ? [hLeft, hCenter, hRight].find(value => value >= minX && value <= maxX) : x
-      y = y < minY || y > maxY ? [vTop, vCenter, vBottom].find(value => value >= minY && value <= maxY) : y
+      if (autoPosition) {
+        x = x < minX || x > maxX ? [hLeft, hCenter, hRight].find(value => value >= minX && value <= maxX) : x
+        y = y < minY || y > maxY ? [vTop, vCenter, vBottom].find(value => value >= minY && value <= maxY) : y
+      }
+      x += parseInt(offsetX) || 0
+      y += parseInt(offsetY) || 0
       popover.style = `left:${x}px;top:${y}px`
     }
   }
@@ -144,7 +150,7 @@ export default {
   },
   mounted () {
     const { reference } = this.$refs
-    const { $slots, placement, custom, openDelay, visible, popoverClass } = this
+    const { $slots, placement, custom, openDelay, visible, popoverClass, offset } = this
     const popover = new Popover({
       propsData: {
         reference,
@@ -153,7 +159,16 @@ export default {
         custom,
         openDelay,
         visible,
-        popoverClass
+        popoverClass,
+        offset
+      },
+      methods: {
+        onEnter: () => {
+          this.$emit('enter').$emit('change', true)
+        },
+        onLeave: () => {
+          this.$emit('leave').$emit('change', false)
+        }
       }
     })
     popover.$mount()
