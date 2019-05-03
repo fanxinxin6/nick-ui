@@ -127,15 +127,18 @@ export default {
     },
     popoverClass: {
       default: ''
+    },
+    reference: {
+      default: null
     }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-popover-reference`
-    const { enter, leave } = this
+    const { enter, leave, reference } = this
     return (
       <div class={prefixClass} ref="reference" onmouseenter={enter} onmouseleave={leave}>
-        {this.$slots.reference}
+        {this.$slots.reference || reference}
       </div>
     )
   },

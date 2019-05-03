@@ -43,7 +43,7 @@ html {
       <Radio custom="accent" size="large" v-model="r" value="3">3333</Radio>
       <Radio size="large" disabled v-model="r" value="3">444</Radio>
       <Radio size="large" v-model="r" value="5">555</Radio>
-      <radio-group  v-model="r">
+      <radio-group v-model="r">
         <Radio size="small" value="2">2222</Radio>
         <Radio custom="accent" size="large" value="3">3333</Radio>
         <Radio size="large" disabled value="3">444</Radio>
@@ -63,7 +63,7 @@ html {
       </checkbox-group>
     </div>
     <div class="switch-test">
-      <Switch1  value="1">asdfds</Switch1>
+      <Switch1 value="1">asdfds</Switch1>
       <Switch1 custom="error" size="small" v-model="c" value="2">asdfds</Switch1>
       <Switch1 size="large" v-model="c" value="3">asdfds</Switch1>
     </div>
@@ -72,6 +72,11 @@ html {
         <div class="test">asdlkal</div>
         <Button slot="reference" size="small">按钮2</Button>
       </Popover>
+    </div>
+    <div class="tooltip-test">
+      <Tooltip tooltip-class="fff" class="afb" placement="right" content="afasd">
+        <Button  size="small">按钮2</Button>
+      </Tooltip>
     </div>
   </div>
 </template>
@@ -87,7 +92,7 @@ import Switch1 from './components/switch/'
 import SwitchGroup from './components/switchGroup/'
 import Toast, { message } from './components/toast/'
 import Popover from './components/popover/'
-
+import Tooltip from './components/tooltip/'
 export default {
   name: 'app',
   components: {
@@ -100,7 +105,8 @@ export default {
     Switch1,
     SwitchGroup,
     Toast,
-    Popover
+    Popover,
+    Tooltip
   },
   data () {
     setTimeout(() => {
