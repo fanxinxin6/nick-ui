@@ -9,7 +9,8 @@ html {
   height: 200px;
 }
 .test {
-  height: 600px;
+  width: 50px;
+  height: 40px;
   background: pink;
   border: 2px solid blue;
 }
@@ -66,6 +67,12 @@ html {
       <Switch1 custom="error" size="small" v-model="c" value="2">asdfds</Switch1>
       <Switch1 size="large" v-model="c" value="3">asdfds</Switch1>
     </div>
+    <div class="popover-test">
+      <Popover>
+        <div class="test">asdlkal</div>
+        <Button slot="reference" size="small">按钮2</Button>
+      </Popover>
+    </div>
   </div>
 </template>
 
@@ -79,6 +86,7 @@ import CheckboxGroup from './components/checkboxGroup/'
 import Switch1 from './components/switch/'
 import SwitchGroup from './components/switchGroup/'
 import Toast, { message } from './components/toast/'
+import Popover from './components/popover/'
 
 export default {
   name: 'app',
@@ -91,7 +99,8 @@ export default {
     CheckboxGroup,
     Switch1,
     SwitchGroup,
-    Toast
+    Toast,
+    Popover
   },
   data () {
     setTimeout(() => {
@@ -107,13 +116,13 @@ export default {
   },
   methods: {
     c1 (a) {
-      console.log(a)
+      // console.log(a)
     },
     msg () {
       const { t1, t2 } = this.$refs
-      t2.message({
-        message: '423d'
-      })
+      // t2.message({
+      //   message: '423d'
+      // })
     }
   }
 }
