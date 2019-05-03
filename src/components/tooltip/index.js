@@ -11,7 +11,7 @@ export default {
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
     const { $slots, placement, openDelay, content, tooltipClass } = this
     return (
-      <Popover popoverClass={tooltipClass} placement={placement} openDelay={openDelay} popover-class={className} reference={$slots.default}>
+      <Popover popoverClass={`${tooltipClass} ${className}`} placement={placement} openDelay={openDelay} reference={$slots.default}>
         {$slots.content || content}
       </Popover>
     )
