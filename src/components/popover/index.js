@@ -71,7 +71,7 @@ const Popover = Vue.extend({
       const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
       const delay = transitionDelay + transitionDuration
       setTimeout(() => {
-        if (popover.parentNode) {
+        if (popover.parentNode && this.isLeave) {
           popover.parentNode.removeChild(popover)
         }
       }, delay)

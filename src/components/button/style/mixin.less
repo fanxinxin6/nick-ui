@@ -6,7 +6,7 @@
     border-radius: @button-border-radius-base;
     user-select: none;
     box-sizing: border-box;
-    border: 1px solid transparent;
+    border: 0;
     transition: @transition-duration-base @transition-timing;
 }
 
@@ -95,6 +95,7 @@
 
 .button-outline() {
     &-outline {
+        border: 1px solid transparent;
         &:enabled {
             .@{prefix}-button-effect {
                 background-color: transparent;
