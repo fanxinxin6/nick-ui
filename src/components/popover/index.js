@@ -8,7 +8,8 @@ const Popover = Vue.extend({
   data () {
     return {
       isEnter: false,
-      isReference: false
+      isReference: false,
+      show: false
     }
   },
   render () {
@@ -23,13 +24,6 @@ const Popover = Vue.extend({
       </div>
     ) : null
   },
-  mounted () {
-    this.$nextTick(() => {
-      if (this.visible) {
-        this.position()
-      }
-    })
-  },
   destroyed () {
     const { $el } = this
     $el.parentNode.removeChild($el)
@@ -40,13 +34,16 @@ const Popover = Vue.extend({
       this.time = Date.now()
       this.isLeave = false
       this.isReference = isReference
+      this.createPopover()
       if (openDelay) {
         setTimeout(() => {
           if (!this.isLeave) {
+            this.position()
             this.isEnter = true
           }
         }, openDelay)
       } else {
+        this.position()
         this.isEnter = true
       }
     },
@@ -57,8 +54,27 @@ const Popover = Vue.extend({
         if (useTime > 10) {
           this.isLeave = true
           this.isEnter = false
+          this.removePopover()
         }
       }, 0)
+    },
+    createPopover () {
+      const { popover } = this.$refs
+      if (!popover.parentNode) {
+        document.body.appendChild(popover)
+      }
+    },
+    removePopover () {
+      const { popover } = this.$refs
+      const style = getComputedStyle(popover)
+      const transitionDelay = Math.max(...style.transitionDelay.split(',').map(item => parseFloat(item) * 1000))
+      const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
+      const delay = transitionDelay + transitionDuration
+      setTimeout(() => {
+        if (popover.parentNode) {
+          popover.parentNode.removeChild(popover)
+        }
+      }, delay)
     },
     position () {
       const { popover } = this.$refs
@@ -137,7 +153,7 @@ export default {
         popoverClass
       }
     })
-    document.body.appendChild(popover.$mount().$el)
+    popover.$mount()
     this.popover = popover
   },
   methods: {
