@@ -85,7 +85,7 @@ html {
     </div>
     <div class="toast-test">
       <Toast class="ttf">
-        <p slot="content">asdfsdf</p>
+        <p slot="content">afffff-{{f1}}</p>
       </Toast>
     </div>
   </div>
@@ -119,6 +119,9 @@ export default {
     Tooltip
   },
   data () {
+    setInterval(() => {
+      this.f1++
+    }, 1000)
     setTimeout(() => {
       //   this.a = true
     }, 1000)

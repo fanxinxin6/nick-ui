@@ -70,22 +70,12 @@ export const toast = (props = { content: '', toastClass: '' }) => {
 }
 export default {
   props: ['duration', 'content', 'toastClass'],
-  created () {
-    const { duration, toastClass } = this
-    this.message = toast({ inner: true, duration, toastClass })
-  },
-  mounted () {
-    const { container } = this.$refs
-    const { message } = this
-    message.container = container
-    message.$mount()
-  },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast`
-    const { $slots, message } = this
+    const { $slots } = this
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
-    message.content = $slots.content
+    this.$nextTick(this.toast)
     return (
       <div ref="container" class={className}>
         {$slots.default}
@@ -93,5 +83,11 @@ export default {
     )
   },
   methods: {
+    toast () {
+      const { duration, toastClass, $slots, content } = this
+      const { container } = this.$refs
+      const message = toast({ container, inner: true, duration, toastClass })
+      message.content = $slots.content || content
+    }
   }
 }
