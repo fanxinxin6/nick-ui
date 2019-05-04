@@ -11,6 +11,7 @@
 9. theme 
 10. popover
 11. tooltip
+12. toast
 ### editorconfig
 ```js
 {
