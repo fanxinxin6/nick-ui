@@ -14,6 +14,11 @@ html {
   background: pink;
   border: 2px solid blue;
 }
+.ttf{
+  width: 350px;
+  height: 200px;
+  border: 2px solid red
+}
 </style>
 
 <template>
@@ -70,13 +75,18 @@ html {
     <div class="popover-test">
       <Popover>
         <div class="test">asdlkal</div>
-        <Button slot="reference" size="small">按钮2</Button>
+        <Button @click="test" slot="reference" size="small">按钮2s</Button>
       </Popover>
     </div>
     <div class="tooltip-test">
       <Tooltip  tooltip-class="fff" class="afb" placement="right" content="afasd">
         <Button  size="small">按钮2</Button>
       </Tooltip>
+    </div>
+    <div class="toast-test">
+      <Toast class="ttf">
+        <p slot="content">asdfsdf</p>
+      </Toast>
     </div>
   </div>
 </template>
@@ -90,7 +100,7 @@ import CheckBox from './components/checkbox/'
 import CheckboxGroup from './components/checkboxGroup/'
 import Switch1 from './components/switch/'
 import SwitchGroup from './components/switchGroup/'
-import Toast, { message } from './components/toast/'
+import Toast, { toast } from './components/toast/'
 import Popover from './components/popover/'
 import Tooltip from './components/tooltip/'
 export default {
@@ -117,7 +127,8 @@ export default {
       c: ['2'],
       s: ['3'],
       h: 0,
-      a: '2'
+      a: '2',
+      f1: 1
     }
   },
   methods: {
@@ -129,6 +140,15 @@ export default {
       // t2.message({
       //   message: '423d'
       // })
+    },
+    test () {
+      const f = toast({
+        duration: 0,
+        content: <div>a1</div>
+      })
+      setTimeout(() => {
+        f.content = <div>a2</div>
+      }, 1000)
     }
   }
 }

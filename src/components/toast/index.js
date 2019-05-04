@@ -1,107 +1,97 @@
 import './style/index.less'
 import Vue from 'vue'
 import Theme from '../../utils/theme'
-import { createFrameworkClass } from '../../utils/'
+import { createFrameworkClass } from '../../utils/index.js'
 const Message = Vue.extend({
-  props: {
-    message: {},
-    custom: {
-      default: 'primary'
-    },
-    outline: {
-      default: false
-    }
-  },
+  name: 'nick-toast-message',
+  props: ['duration', 'content', 'toastClass', 'container', 'inner'],
   data () {
     return {
-      leave: false
+      isEnter: false
     }
   },
   mounted () {
+    const { duration = 500, container = document.body } = this
+    container.appendChild(this.$el)
     setTimeout(() => {
-      this.leave = true
-    }, 3000)
+      this.isEnter = true
+      if (duration) {
+        const delay = this.getDelay()
+        setTimeout(() => {
+          setTimeout(() => {
+            this.isEnter = false
+            this.removeMessage()
+          }, duration)
+        }, delay)
+      }
+    }, 16)
+  },
+  beforeDestroy () {
+    const { message } = this.$refs
+    if (message.parentNode && !this.isEnter) {
+      message.parentNode.removeChild(message)
+    }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast-message`
-    const { message, remove, leave, custom, outline } = this
-    const className = createFrameworkClass({ [prefixClass]: true, leave, custom, outline }, prefix, prefixClass)
+    const { isEnter, content, toastClass, inner } = this
+    const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: !isEnter, inner }, prefix, prefixClass)
     return (
-      <div onAnimationend={remove} onClick={remove} class={className}>
-        <div class={`${prefixClass}-wrapper ${prefix}-custom-inherit-${custom}`}>
-          <div class={`${prefix}-inherit-${custom}`}>
-            <div class={`${prefixClass}-inner`}>
-              {message}
-            </div>
-          </div>
-        </div>
+      <div ref="message" class={`${className} ${toastClass}`}>
+        {content}
       </div>
     )
   },
   methods: {
-    remove () {
-      const { $el, leave } = this
-      if (!leave) return
-      this.$destroy()
-      // $el.parentNode.removeChild($el)
+    getDelay () {
+      const { message } = this.$refs
+      const style = getComputedStyle(message)
+      const transitionDelay = Math.max(...style.transitionDelay.split(',').map(item => parseFloat(item) * 1000))
+      const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
+      const delay = transitionDelay + transitionDuration
+      return delay
+    },
+    removeMessage () {
+      setTimeout(() => {
+        this.$destroy()
+      }, this.getDelay())
+    },
+    close () {
+      this.isEnter = false
+      this.removeMessage()
     }
   }
 })
-const Toast = Vue.extend({
+export const toast = (props = { content: '', toastClass: '' }) => {
+  return new Message({
+    propsData: props
+  }).$mount()
+}
+export default {
+  props: ['duration', 'content', 'toastClass'],
+  created () {
+    const { duration, toastClass } = this
+    this.message = toast({ inner: true, duration, toastClass })
+  },
+  mounted () {
+    const { container } = this.$refs
+    const { message } = this
+    message.container = container
+    message.$mount()
+  },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast`
+    const { $slots, message } = this
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
+    message.content = $slots.content
     return (
-      <div class={className}></div>
+      <div ref="container" class={className}>
+        {$slots.default}
+      </div>
     )
   },
   methods: {
-    message ({ message } = {}) {
-      const { $el } = this
-      $el.appendChild(new Message({
-        propsData: {
-          message
-        }
-      }).$mount().$el)
-    }
-  }
-})
-let toast
-export const message = (...arg) => {
-  if (!toast) {
-    toast = new Toast({
-      methods: {
-        checkMount () {
-          const { prefix } = Theme
-          const prefixClass = `${prefix}-toast`
-          if (!this._isMounted) {
-            this.$mount()
-          }
-          const { $el } = this
-          const { body } = document
-          $el.id = prefixClass
-          const old = body.querySelector(`#${prefixClass}`)
-          if (!old) {
-            body.appendChild($el)
-          }
-        }
-      }
-    })
-  }
-  toast.checkMount()
-  toast.message(...arg)
-}
-export default {
-  render () {
-    return <Toast ref="toast"></Toast>
-  },
-  methods: {
-    message (options) {
-      const { toast } = this.$refs
-      if (!toast) return
-      toast.message(options)
-    }
   }
 }

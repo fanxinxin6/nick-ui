@@ -33,12 +33,12 @@ export default {
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-button`
-    const { custom, size, shape, disabled, flat, outline, ripple, $slots, onmousedown, onmouseup } = this
+    const { custom, size, shape, disabled, flat, outline, ripple, $slots, onclick, onmousedown, onmouseup } = this
     const className = createFrameworkClass({ [prefixClass]: true, custom, size, shape, flat, outline, currentColor: outline === '' || flat === '' || disabled === '' ? '' : false }, prefix, prefixClass)
     const effect = $slots.effect || <div disabled={disabled} class={`${prefixClass}-effect ${prefix}-${custom}`}/>
     const RippleEffect = ripple ? <Ripple ref="ripple"></Ripple> : null
     return (
-      <button onmousedown={onmousedown} onmouseup={onmouseup} disabled={disabled} type="button" class={className}>
+      <button onclick={onclick} onmousedown={onmousedown} onmouseup={onmouseup} disabled={disabled} type="button" class={className}>
         { effect}
         {RippleEffect}
         <div class={`${prefixClass}-wrapper display-flex flex-row-center flex-col-center`}>

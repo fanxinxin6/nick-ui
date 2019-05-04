@@ -9,6 +9,8 @@
 7. ripple
 8. scroll
 9. theme 
+10. popover
+11. tooltip
 ### editorconfig
 ```js
 {

@@ -1,6 +1,6 @@
 import '../assets/style/common/index.less'
 import Color from 'color'
-let prefix = 'nick-ui'
+let prefix = 'nick'
 let theme = {
   primary: '#3f51b5',
   error: '#65bccb',
