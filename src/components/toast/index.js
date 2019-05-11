@@ -35,7 +35,7 @@ const Message = Vue.extend({
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast-message`
-    const { isEnter, content, toastClass, inner } = this
+    const { isEnter, content, toastClass = '', inner = '' } = this
     const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: !isEnter, inner }, prefix, prefixClass)
     return (
       <div ref="message" class={`${className} ${toastClass}`}>
