@@ -26,7 +26,8 @@ export default {
   },
   data () {
     return {
-      status: false
+      status: false,
+      focus: false
     }
   },
   computed: {
@@ -41,16 +42,16 @@ export default {
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-switch`
-    const { checked, ripple } = this
+    const { checked, ripple, focus } = this
     const custom = checked ? this.custom : 'accent'
-    const { size, disabled, $slots, onclick, onmousedown } = this
-    const className = createFrameworkClass({ [prefixClass]: true, custom, size }, prefix, prefixClass)
+    const { size, disabled, $slots, onclick, onmousedown, onblur } = this
+    const className = createFrameworkClass({ [prefixClass]: true, custom, size, focus }, prefix, prefixClass)
     const customClass = `${prefix}-${custom}`
     const customNoHover = `${customClass}-nohover`
     const RippleEffect = ripple ? <div class={`${customClass} ${prefixClass}-effect-ripple`}><Ripple ref="ripple"></Ripple></div> : null
-    const effect = $slots.effect || <div class={`${prefixClass}-effect ${customClass}${checked ? '-lighten-8' : ''} display-flex flex-row-center flex-col-center`}><div onmousedown={onmousedown} class={`${prefixClass}-effect-inner ${customClass} ${customNoHover}`}>{RippleEffect}</div></div>
+    const effect = $slots.effect || <div ref="effect" class={`${prefixClass}-effect ${customClass}${checked ? '-lighten-8' : ''} display-flex flex-row-center flex-col-center`}><div onmousedown={onmousedown} class={`${prefixClass}-effect-inner ${customClass} ${customNoHover}`}>{RippleEffect}</div></div>
     return (
-      <button ref="container" onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
+      <button ref="container" onblur={onblur} onclick={onclick} disabled={disabled} checked={checked} type="button" class={className}>
         <div class="display-flex flex-col-center">
           {effect}
           <div class={`${prefixClass}-wrapper  display-flex flex-row-center flex-col-center`}>
@@ -63,6 +64,9 @@ export default {
     )
   },
   methods: {
+    onblur () {
+      this.focus = false
+    },
     onmousedown (event) {
       const { disabled } = this
       if (disabled || disabled === '') {
@@ -75,6 +79,8 @@ export default {
     },
     onclick (event) {
       const { value, isGroup } = this
+      const { effect } = this.$refs
+      const { target } = event
       let { modelData } = this
       modelData = isGroup || modelData ? new Set((isGroup ? this.$parent : this).modelData) : modelData
       if (modelData === undefined) {
@@ -93,8 +99,8 @@ export default {
       } else {
         this.$emit('input', modelData)
       }
+      this.focus = target === effect
       this.$emit('change', modelData, event)
     }
-
   }
 }

@@ -19,8 +19,8 @@
     &-effect-ripple {
         left: 50%;
         top: 50%;
-        width: 250%;
-        height: 250%;
+        width: 200%;
+        height: 200%;
         transform: translate(-50%, -50%);
         border-radius: 50%;
         position: absolute;
@@ -40,6 +40,18 @@
         transition: transform 0.15s linear, left 0.15s linear;
         transform: translate(0, -50%);
         box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+
+        &::before {
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            content: "";
+            opacity: 0.2;
+            position: absolute;
+            border-radius: inherit;
+            transform: translate(-50%, -50%) scale(1.3);
+        }
     }
 }
 
@@ -83,10 +95,6 @@
 
 .switch-checked() {
     &[checked] {
-        .@{prefix}-switch-effect {
-            // background-color: currentColor;
-        }
-
         .@{prefix}-switch-effect-inner {
             left: 100%;
             background-color: currentColor;
@@ -101,135 +109,13 @@
     }
 }
 
-// .switch() {
-//   outline: 0;
-//   cursor: pointer;
-//   position: relative;
-//   user-select: none;
-//   border: 0;
-// }
-// .switch-wrapper() {
-//   &-wrapper {
-//     border-radius: 20px;
-//     position: relative;
-//     border: 1px solid transparent;
-//     background-color: currentColor;
-//     transition: @transition-duration-base @transition-timing;
-//   }
-// }
-// .switch-effect() {
-//   &-effect {
-//     left: 0;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     opacity: 0.5;
-//     border-radius: 50%;
-//     position: absolute;
-//     background-color: transparent;
-//   }
-// }
-// .switch-checked() {
-//   &[checked] {
-//     .@{prefix}-switch-wrapper {
-//       .@{prefix}-switch-btn {
-//         left: 100%;
-//         background-color: currentColor;
-//         transform: translate(-100%,-50%);
-//       }
-//     }
-//   }
-// }
-// .switch-inner() {
-//   &-inner {
-//     position: relative;
-//   }
-// }
-// .switch-size() {
-//   &-normal {
-//     .@{prefix}-switch-wrapper {
-//       width: 30px;
-//       height: 10px;
-//       .@{prefix}-switch-btn {
-//         height: 18px;
-//         width: 18px;
-//       }
-//     }
-//   }
-//   &-small {
-//     .@{prefix}-switch-wrapper {
-//       width: 40px;
-//       height: 12px;
-//       .@{prefix}-switch-btn {
-//         height: 20px;
-//         width: 20px;
-//       }
-//     }
-//   }
-//   &-large {
-//     .@{prefix}-switch-wrapper {
-//       width: 50px;
-//       height: 14px;
-//       .@{prefix}-switch-btn {
-//         height: 26px;
-//         width: 26px;
-//       }
-//     }
-//   }
-// }
-// .switch-disabled() {
-//   &:disabled {
-//     cursor: not-allowed;
-//   }
-// }
-// .switch-btn() {
-//   &-btn {
-//     left: 0;
-//     top: 50%;
-//     transform: translate(-10%,-50%);
-//     content: "";
-//     border-radius: 30px;
-//     position: absolute;
-//     transition: inherit;
-//     background: #fff;
-//     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.4);
-//     &::before{
-//       content: "";
-//       left: 0;
-//       top: 0;
-//       right: 0;
-//       bottom: 0;
-//       opacity: 0;
-//       transform: scale(1.3);
-//       pointer-events: none;
-//       border-radius: 50%;
-//       position: absolute;
-//       background-color: currentColor;
-//     }
-//   }
-// }
-// .switch-clicked(){
-//   &-clicked{
-//     .@{prefix}-switch-effect{
-//       animation: radio-switch-effect 0.2s both;
-//       background-color: currentColor;
-//     }
-//   }
-// }
-// .switch-focus(){
-//   &:focus{
-//     .@{prefix}-switch-btn{
-//       &:before{
-//         opacity: 0.2;
-//       }
-//     }
-//   }
-// }
-// @keyframes radio-switch-effect{
-//   0%{
-//     transform: scale(1)
-//   }
-//   100%{
-//     transform: scale(2.5)
-//   }
-// }
+.switch-focus() {
+    &-focus {
+        .@{prefix}-switch-effect-inner {
+            &::before {
+                background-color: currentColor
+            }
+        }
+
+    }
+}
