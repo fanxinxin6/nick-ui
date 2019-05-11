@@ -14,10 +14,10 @@ html {
   background: pink;
   border: 2px solid blue;
 }
-.ttf{
+.ttf {
   width: 350px;
   height: 200px;
-  border: 2px solid red
+  border: 2px solid red;
 }
 </style>
 
@@ -79,14 +79,20 @@ html {
       </Popover>
     </div>
     <div class="tooltip-test">
-      <Tooltip  tooltip-class="fff" class="afb" placement="right" content="afasd">
-        <Button  size="small">按钮2</Button>
+      <Tooltip tooltip-class="fff" class="afb" placement="right" content="afasd">
+        <Button @click="test2" size="small">按钮2</Button>
       </Tooltip>
+      {{f1}}
     </div>
     <div class="toast-test">
-      <Toast class="ttf">
-        <p slot="content">afffff-{{f1}}</p>
-      </Toast>
+      <!-- <Toast class="ttf" :inner="true" :duration="0">
+        <p slot="content" a="sdf" @click="close">afffff</p>
+      </Toast> -->
+    </div>
+    <div class="notice-test">
+      <Notice  content="aa66">
+        <div @click="close1">asdaf999--{{f1}}</div>
+      </Notice>
     </div>
   </div>
 </template>
@@ -103,6 +109,7 @@ import SwitchGroup from './components/switchGroup/'
 import Toast, { toast } from './components/toast/'
 import Popover from './components/popover/'
 import Tooltip from './components/tooltip/'
+import Notice from './components/notice/'
 export default {
   name: 'app',
   components: {
@@ -116,15 +123,16 @@ export default {
     SwitchGroup,
     Toast,
     Popover,
-    Tooltip
+    Tooltip,
+    Notice
   },
   data () {
     setInterval(() => {
-      this.f1++
-    }, 1000)
+      // this.f1++
+    }, 200)
     setTimeout(() => {
       //   this.a = true
-    }, 1000)
+    }, 200)
     return {
       r: '1',
       c: ['2'],
@@ -135,6 +143,14 @@ export default {
     }
   },
   methods: {
+    close (context) {
+      context.close()
+      console.log(context, 2)
+    },
+    close1 (context) {
+      // context.close()
+      console.log(context, 2)
+    },
     c1 (a) {
       // console.log(a)
     },
@@ -146,12 +162,15 @@ export default {
     },
     test () {
       const f = toast({
-        duration: 0,
+        // duration: 0,
         content: <div>a1</div>
       })
       setTimeout(() => {
-        f.content = <div>a2</div>
+        // f.content = <div>a2</div>
       }, 1000)
+    },
+    test2 () {
+      this.f1++
     }
   }
 }

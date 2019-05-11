@@ -3,16 +3,17 @@ import Vue from 'vue'
 import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/index.js'
 const Message = Vue.extend({
-  name: 'nick-toast-message',
-  props: ['duration', 'content', 'toastClass', 'container', 'inner'],
+  name: 'nick-notice-message',
+  props: ['duration', 'content', 'noticeClass', 'container', 'inner'],
   data () {
     return {
-      isEnter: false
+      isEnter: false,
+      isLeave: false
     }
   },
   mounted () {
-    const { duration = 500, container = document.body } = this
-    container.appendChild(this.$el)
+    const { duration = 500, container = document.body, $el } = this
+    container.appendChild($el)
     setTimeout(() => {
       this.isEnter = true
       if (duration) {
@@ -20,6 +21,7 @@ const Message = Vue.extend({
         setTimeout(() => {
           setTimeout(() => {
             this.isEnter = false
+            this.isLeave = true
             this.removeMessage()
           }, duration)
         }, delay)
@@ -34,16 +36,24 @@ const Message = Vue.extend({
   },
   render () {
     const { prefix } = Theme
-    const prefixClass = `${prefix}-toast-message`
-    const { isEnter, content, toastClass = '', inner = '' } = this
-    const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: !isEnter, inner }, prefix, prefixClass)
+    const prefixClass = `${prefix}-notice-message`
+    const { isEnter, content, noticeClass = '', inner = '', isLeave } = this
+    const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: isLeave, inner }, prefix, prefixClass)
+    this.$nextTick(this.setHeight)
     return (
-      <div ref="message" class={`${className} ${toastClass}`}>
+      <div ref="message" class={`${className} ${noticeClass}`}>
         {content}
       </div>
     )
   },
   methods: {
+    setHeight () {
+      const { message } = this.$refs
+      const { clientHeight } = message
+      if (clientHeight) {
+        message.style.height = `${message.clientHeight}px`
+      }
+    },
     getDelay () {
       const { message } = this.$refs
       const style = getComputedStyle(message)
@@ -59,43 +69,55 @@ const Message = Vue.extend({
     },
     close () {
       this.isEnter = false
+      this.isLeave = true
       this.removeMessage()
     }
   }
 })
-export const toast = (props = { content: '', toastClass: '' }) => {
+export const notice = (props = { content: '', noticeClass: '' }) => {
   return new Message({
     propsData: props
   }).$mount()
 }
 export default {
-  props: ['duration', 'content', 'toastClass', 'inner'],
+  props: {
+    duration: {
+      default: 0
+    },
+    content: {
+      default: ''
+    },
+    custom: {
+      default: 'primary'
+    }
+  },
   render () {
     const { prefix } = Theme
-    const prefixClass = `${prefix}-toast`
-    const { $slots, inner = false } = this
+    const prefixClass = `${prefix}-notice`
+    const { $slots } = this
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
-    this.$nextTick(this.toast)
-    return inner ? (
+    this.prefixClass = prefixClass
+    this.$nextTick(this.notice)
+    return (
       <div ref="container" class={className}>
         {$slots.default}
       </div>
-    ) : null
+    )
   },
   methods: {
-    toast () {
-      const { duration, toastClass, $slots, content, inner } = this
+    notice () {
+      const { duration, prefixClass, $slots, content, inner } = this
       const { container } = this.$refs
-      const message = toast({ container, inner, duration, toastClass })
-      message.content = inner ? $slots.content || content : $slots.default
+      const message = notice({ container, inner: true, duration, noticeClass: `${prefixClass}-message` })
+      message.content = $slots.default
       const { content: vnodes } = message
-      console.log(vnodes)
       if (vnodes && vnodes.forEach) {
         vnodes.forEach(vnode => {
           const { data = {} } = vnode
           const { on = {} } = data
           for (let [event, callback] of Object.entries(on)) {
             on[event] = (...arg) => {
+              console.log(789)
               callback(message, ...arg)
             }
           }
