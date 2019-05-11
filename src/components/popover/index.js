@@ -9,17 +9,18 @@ const Popover = Vue.extend({
     return {
       isEnter: false,
       isReference: false,
-      show: false
+      show: false,
+      placementClass: ''
     }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-popover`
-    const { custom, visible, isEnter, popoverClass, isReference } = this
+    const { custom, visible, isEnter, popoverClass, isReference, placementClass } = this
     const reference = isReference ? 'reference' : 'self'
     const className = createFrameworkClass({ [prefixClass]: true, custom, visible, enter: isEnter, [`leave-${reference}`]: !isEnter }, prefix, prefixClass)
     return visible ? (
-      <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${popoverClass}`}>
+      <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
         {this.content.default}
       </div>
     ) : null
@@ -38,13 +39,13 @@ const Popover = Vue.extend({
       if (openDelay) {
         setTimeout(() => {
           if (!this.isLeave) {
-            this.position()
             this.isEnter = true
+            this.position()
           }
         }, openDelay)
       } else {
-        this.position()
         this.isEnter = true
+        this.position()
       }
     },
     leave (event, isReference = false) {
@@ -104,6 +105,9 @@ const Popover = Vue.extend({
         x = x < minX || x > maxX ? [hLeft, hCenter, hRight].find(value => value >= minX && value <= maxX) : x
         y = y < minY || y > maxY ? [vTop, vCenter, vBottom].find(value => value >= minY && value <= maxY) : y
       }
+      const horizontal = x === hLeft ? 'left' : x === hCenter ? 'center' : 'right'
+      const vertical = y === vTop ? 'top' : x === vCenter ? 'center' : 'bottom'
+      this.placementClass = `${horizontal}-${vertical}`
       x += parseInt(offsetX) || 0
       y += parseInt(offsetY) || 0
       popover.style = `left:${x}px;top:${y}px`
