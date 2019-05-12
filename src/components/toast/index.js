@@ -4,7 +4,7 @@ import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/index.js'
 const Message = Vue.extend({
   name: 'nick-toast-message',
-  props: ['duration', 'content', 'toastClass', 'container', 'inner'],
+  props: ['duration', 'content', 'toastClass', 'container', 'inner', 'custom'],
   data () {
     return {
       isEnter: false
@@ -35,10 +35,10 @@ const Message = Vue.extend({
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast-message`
-    const { isEnter, content, toastClass = '', inner = '' } = this
+    const { isEnter, content, toastClass = '', inner = '', custom = 'accent' } = this
     const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: !isEnter, inner }, prefix, prefixClass)
     return (
-      <div ref="message" class={`${className} ${toastClass}`}>
+      <div ref="message" class={`${className} ${prefix}-${custom}-currentColor ${toastClass}`}>
         {content}
       </div>
     )
@@ -69,7 +69,7 @@ export const toast = (props = { content: '', toastClass: '' }) => {
   }).$mount()
 }
 export default {
-  props: ['duration', 'content', 'toastClass', 'inner'],
+  props: ['duration', 'content', 'toastClass', 'inner', 'custom'],
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast`
@@ -84,9 +84,9 @@ export default {
   },
   methods: {
     toast () {
-      const { duration, toastClass, $slots, content, inner } = this
+      const { duration, toastClass, $slots, content, inner, custom } = this
       const { container } = this.$refs
-      const message = toast({ container, inner, duration, toastClass })
+      const message = toast({ container, inner, duration, toastClass, custom })
       message.content = inner ? $slots.content || content : $slots.default
       const { content: vnodes } = message
       if (vnodes && vnodes.forEach) {

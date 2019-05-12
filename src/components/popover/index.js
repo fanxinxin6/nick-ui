@@ -20,7 +20,7 @@ const Popover = Vue.extend({
     const reference = isReference ? 'reference' : 'self'
     const className = createFrameworkClass({ [prefixClass]: true, custom, visible, enter: isEnter, [`leave-${reference}`]: !isEnter }, prefix, prefixClass)
     return visible ? (
-      <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
+      <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${prefix}-${custom}-currentColor ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
         {this.content.default}
       </div>
     ) : null
