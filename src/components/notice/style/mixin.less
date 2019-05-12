@@ -2,17 +2,24 @@
     top: 0;
     right: 100px;
     height: 100%;
+    padding: 20px;
     position: fixed;
     overflow: hidden;
+    box-sizing: border-box;
 }
 .notice-message() {
     &-message {
+        width: 320px;
+        height: 120px;
         overflow: hidden;
-        transition-duration: 0.5s ;
+        margin-bottom: 16px;
+        border-radius: 6px;
+        transition-duration: 0.3s ;
         transform-origin: left top;
-        transition-timing-function: ease-in-out;
+        transition-timing-function: ease-out;
         transition-property: opacity,transform,height;
-        background-color: rgba(0, 0, 0, 0.75);
+        background-color: #fff;
+        box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         transform: translateX(100%);
     }
 }

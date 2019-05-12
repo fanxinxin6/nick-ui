@@ -89,7 +89,6 @@ export default {
       const message = toast({ container, inner, duration, toastClass })
       message.content = inner ? $slots.content || content : $slots.default
       const { content: vnodes } = message
-      console.log(vnodes)
       if (vnodes && vnodes.forEach) {
         vnodes.forEach(vnode => {
           const { data = {} } = vnode

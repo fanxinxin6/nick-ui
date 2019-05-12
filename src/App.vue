@@ -148,7 +148,7 @@ export default {
       console.log(context, 2)
     },
     close1 (context) {
-      // context.close()
+      context.close()
       console.log(context, 2)
     },
     c1 (a) {

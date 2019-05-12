@@ -4,7 +4,7 @@ import Theme from '../../utils/theme'
 import { createFrameworkClass } from '../../utils/index.js'
 const Message = Vue.extend({
   name: 'nick-notice-message',
-  props: ['duration', 'content', 'noticeClass', 'container', 'inner'],
+  props: ['duration', 'content', 'noticeClass', 'container', 'inner', 'append'],
   data () {
     return {
       isEnter: false,
@@ -12,8 +12,12 @@ const Message = Vue.extend({
     }
   },
   mounted () {
-    const { duration = 500, container = document.body, $el } = this
-    container.appendChild($el)
+    const { duration = 500, container = document.body, $el, append = true } = this
+    if (append) {
+      container.appendChild($el)
+    } else {
+      container.prepend($el)
+    }
     setTimeout(() => {
       this.isEnter = true
       if (duration) {
@@ -56,6 +60,7 @@ const Message = Vue.extend({
     },
     getDelay () {
       const { message } = this.$refs
+      if (!message) return
       const style = getComputedStyle(message)
       const transitionDelay = Math.max(...style.transitionDelay.split(',').map(item => parseFloat(item) * 1000))
       const transitionDuration = Math.max(...style.transitionDuration.split(',').map(item => parseFloat(item) * 1000))
@@ -82,33 +87,35 @@ export const notice = (props = { content: '', noticeClass: '' }) => {
 export default {
   props: {
     duration: {
-      default: 0
+      default: 3000
     },
     content: {
       default: ''
     },
     custom: {
       default: 'primary'
+    },
+    append: {
+      default: true
     }
   },
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-notice`
-    const { $slots } = this
+    const { custom } = this
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
     this.prefixClass = prefixClass
     this.$nextTick(this.notice)
     return (
-      <div ref="container" class={className}>
-        {$slots.default}
+      <div ref="container" class={`${className} ${prefix}-${custom}-currentColor`}>
       </div>
     )
   },
   methods: {
     notice () {
-      const { duration, prefixClass, $slots, content, inner } = this
+      const { duration, prefixClass, $slots, append } = this
       const { container } = this.$refs
-      const message = notice({ container, inner: true, duration, noticeClass: `${prefixClass}-message` })
+      const message = notice({ container, inner: true, duration, append, noticeClass: `${prefixClass}-message` })
       message.content = $slots.default
       const { content: vnodes } = message
       if (vnodes && vnodes.forEach) {
@@ -117,7 +124,6 @@ export default {
           const { on = {} } = data
           for (let [event, callback] of Object.entries(on)) {
             on[event] = (...arg) => {
-              console.log(789)
               callback(message, ...arg)
             }
           }
