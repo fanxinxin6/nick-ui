@@ -162,7 +162,7 @@ export default {
     },
     test () {
       const f = toast({
-        duration: 0,
+        // duration: 0,
         content: <div>a1</div>
       })
       setTimeout(() => {
