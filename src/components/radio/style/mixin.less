@@ -21,9 +21,10 @@
         top: 50%;
         width: 250%;
         height: 250%;
-        transform: translate(-50%, -50%);
         border-radius: 50%;
         position: absolute;
+        overflow: hidden;
+        transform: translate(-50%, -50%);
     }
 }
 
@@ -77,71 +78,3 @@
         cursor: not-allowed;
     }
 }
-
-// .radio-wrapper() {
-//   &-wrapper {
-//     border-radius: 50%;
-//     position: relative;
-//     border: 1px solid currentColor;
-//     transition:@transition-duration-base @transition-timing;
-//     &::before {
-//       content: "";
-//       border-radius: inherit;
-//       position: absolute;
-//       left:50%;
-//       top: 50%;
-//       width: 50%;
-//       height: 50%;
-//       background-color: transparent;
-//       transform: translate(-50%,-50%) ;
-//     }
-//   }
-// }
-// .radio-effect() {
-//   &-effect {
-//     left: 0;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     opacity: 0.5;
-//     border-radius: inherit;
-//     position: absolute;
-//     background-color: transparent;
-//   }
-// }
-// .radio-checked(){
-//   &[checked]{ 
-//     .@{prefix}-radio-wrapper {
-//       &::before{
-//        background-color: currentColor;
-//       }
-//     }
-//   }
-// }
-// .radio-inner() {
-//   &-inner {
-//     position: relative;
-//   }
-// }
-
-// .radio-disabled() {
-//   &:disabled {
-//     cursor: not-allowed;
-//   }
-// }
-// .radio-clicked(){
-//   &-clicked{
-//     .@{prefix}-radio-effect{
-//       animation: radio-checkbox-effect 0.2s both;
-//       background-color: currentColor;
-//     }
-//   }
-// }
-// @keyframes radio-checkbox-effect{
-//   0%{
-//     transform: scale(1)
-//   }
-//   100%{
-//     transform: scale(2.5)
-//   }
-// }

@@ -19,6 +19,7 @@ const Popover = Vue.extend({
     const { custom, visible, isEnter, popoverClass, isReference, placementClass, isLeave = false } = this
     const reference = isReference ? 'reference' : 'self'
     const className = createFrameworkClass({ [prefixClass]: true, custom, visible, enter: isEnter, leave: isLeave, [`leave-${reference}`]: !isEnter }, prefix, prefixClass)
+    this.$nextTick(this.setHeight)
     return visible ? (
       <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${prefix}-${custom}-currentColor ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
         {this.content.default}
@@ -30,6 +31,14 @@ const Popover = Vue.extend({
     $el.parentNode.removeChild($el)
   },
   methods: {
+    setHeight () {
+      const { popover } = this.$refs
+      const { clientHeight } = popover
+      const style = getComputedStyle(popover)
+      const { paddingTop, paddingBottom, height } = style
+      // const height = clientHeight - parseFloat(paddingTop) - parseFloat(paddingBottom)
+      popover.style.height = `${height}`
+    },
     enter (event, isReference = false) {
       const { openDelay } = this
       this.time = Date.now()
@@ -79,11 +88,15 @@ const Popover = Vue.extend({
       }, delay)
     },
     position () {
+      const html = document.documentElement
+      const body = document.body
       const { popover } = this.$refs
       const { reference, placement = 'center', offset = {}, autoPosition } = this
       const { x: offsetX, y: offsetY } = offset
       const { offsetWidth, offsetHeight } = popover
-      const { scrollWidth, scrollHeight, scrollTop, scrollLeft } = document.documentElement
+      const { scrollWidth, scrollHeight } = html
+      const scrollTop = html.scrollTop || body.scrollTop
+      const scrollLeft = html.scrollLeft || body.scrollLeft
       const rect = reference.getBoundingClientRect()
       const { width, height } = rect
       const left = rect.left + scrollLeft
@@ -116,6 +129,7 @@ const Popover = Vue.extend({
       x += parseInt(offsetX) || 0
       y += parseInt(offsetY) || 0
       popover.style = `left:${x}px;top:${y}px`
+      console.log(rect)
     }
   }
 })

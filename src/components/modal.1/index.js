@@ -60,12 +60,7 @@ export default {
     )
   },
   created () {
-    console.log(this.$el)
     document.addEventListener('keydown', this.keydown)
-  },
-  mounted () {
-    document.body.appendChild(this.$el)
-    console.log(this.$el)
   },
   destroyed () {
     document.removeEventListener('keydown', this.keydown)
