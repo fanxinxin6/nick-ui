@@ -17,7 +17,7 @@ const createStyleSheet = () => {
   style = document.querySelector(`#${styleId}`) || document.createElement('style')
   if (!style[styleId]) {
     style.id = styleId
-    document.head.append(style)
+    document.head.appendChild(style)
   }
   updateStyle()
 }
