@@ -7,7 +7,8 @@ const Message = Vue.extend({
   props: ['duration', 'content', 'toastClass', 'container', 'inner', 'custom'],
   data () {
     return {
-      isEnter: false
+      isEnter: false,
+      isLeave: false
     }
   },
   mounted () {
@@ -20,6 +21,7 @@ const Message = Vue.extend({
         setTimeout(() => {
           setTimeout(() => {
             this.isEnter = false
+            this.isLeave = true
             this.removeMessage()
           }, duration)
         }, delay)
@@ -35,8 +37,8 @@ const Message = Vue.extend({
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-toast-message`
-    const { isEnter, content, toastClass = '', inner = '', custom = 'accent' } = this
-    const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: !isEnter, inner }, prefix, prefixClass)
+    const { isEnter, content, toastClass = '', inner = '', custom = 'accent', isLeave } = this
+    const className = createFrameworkClass({ [prefixClass]: true, enter: isEnter, leave: isLeave, inner }, prefix, prefixClass)
     return (
       <div ref="message" class={`${className} ${prefix}-${custom}-currentColor ${toastClass}`}>
         {content}
@@ -59,6 +61,7 @@ const Message = Vue.extend({
     },
     close () {
       this.isEnter = false
+      this.isLeave = true
       this.removeMessage()
     }
   }
