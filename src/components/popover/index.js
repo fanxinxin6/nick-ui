@@ -8,6 +8,7 @@ const Popover = Vue.extend({
   data () {
     return {
       isEnter: false,
+      isLeave: false,
       isReference: false,
       show: false,
       placementClass: ''
@@ -16,13 +17,15 @@ const Popover = Vue.extend({
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-popover`
-    const { custom, visible, isEnter, popoverClass, isReference, placementClass, isLeave = false } = this
+    const { custom, visible, isEnter, popoverClass, isReference, placementClass, isLeave } = this
     const reference = isReference ? 'reference' : 'self'
     const className = createFrameworkClass({ [prefixClass]: true, custom, visible, enter: isEnter, leave: isLeave, [`leave-${reference}`]: !isEnter }, prefix, prefixClass)
-    this.$nextTick(this.setHeight)
+    this.$nextTick(this.position)
     return visible ? (
       <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${prefix}-${custom}-currentColor ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
-        {this.content.default}
+        <div ref="wrapper" class={`${prefixClass}-wrapper`}>
+          {this.content.default}
+        </div>
       </div>
     ) : null
   },
@@ -31,14 +34,6 @@ const Popover = Vue.extend({
     $el.parentNode.removeChild($el)
   },
   methods: {
-    setHeight () {
-      const { popover } = this.$refs
-      const { clientHeight } = popover
-      const style = getComputedStyle(popover)
-      const { paddingTop, paddingBottom, height } = style
-      // const height = clientHeight - parseFloat(paddingTop) - parseFloat(paddingBottom)
-      popover.style.height = `${height}`
-    },
     enter (event, isReference = false) {
       const { openDelay } = this
       this.time = Date.now()
@@ -49,12 +44,10 @@ const Popover = Vue.extend({
         setTimeout(() => {
           if (!this.isLeave) {
             this.isEnter = true
-            this.position()
           }
         }, openDelay)
       } else {
         this.isEnter = true
-        this.position()
       }
     },
     leave (event, isReference = false) {
@@ -93,10 +86,10 @@ const Popover = Vue.extend({
       const { popover } = this.$refs
       const { reference, placement = 'center', offset = {}, autoPosition } = this
       const { x: offsetX, y: offsetY } = offset
-      const { offsetWidth, offsetHeight } = popover
-      const { scrollWidth, scrollHeight } = html
-      const scrollTop = html.scrollTop || body.scrollTop
-      const scrollLeft = html.scrollLeft || body.scrollLeft
+      const { offsetWidth, offsetHeight, style } = popover
+      const { scrollWidth, scrollHeight, clientHeight } = html
+      const scrollTop = body.scrollTop || html.scrollTop
+      const scrollLeft = body.scrollLeft || html.scrollLeft
       const rect = reference.getBoundingClientRect()
       const { width, height } = rect
       const left = rect.left + scrollLeft
@@ -112,9 +105,10 @@ const Popover = Vue.extend({
       const hCenter = left + ((width - offsetWidth) / 2)
       const vTop = top - offsetHeight
       const vCenter = top + ((height - offsetHeight) / 2)
-      const vBottom = bottom
+      const vBottom = clientHeight - bottom
       const placementArr = placement.toLowerCase().split('-')
       const positionMap = { left: hLeft, right: hRight, top: vTop, bottom: vBottom }
+      const isBottom = /bottom/.test(placement)
       let xIndex = placementArr.findIndex(value => /(left|right)/.test(value))
       let yIndex = placementArr.findIndex(value => /(top|bottom)/.test(value))
       let x = positionMap[placementArr[xIndex]] || hCenter
@@ -128,8 +122,13 @@ const Popover = Vue.extend({
       this.placementClass = `${horizontal}-${vertical}`
       x += parseInt(offsetX) || 0
       y += parseInt(offsetY) || 0
-      popover.style = `left:${x}px;top:${y}px`
-      console.log(rect)
+      if (isBottom) {
+        style.left = `${x}px`
+        style.bottom = `${y}px`
+      } else {
+        style.left = `${x}px`
+        style.top = `${y}px`
+      }
     }
   }
 })

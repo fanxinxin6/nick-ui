@@ -1,7 +1,5 @@
 <style>
-#app,
-body,
-html {
+html,body{
   height: 100%;
 }
 .nick-scroll {
@@ -10,7 +8,6 @@ html {
 }
 .test {
   width: 50px;
-  height: 40px;
   background: pink;
   border: 2px solid blue;
 }
@@ -73,13 +70,16 @@ html {
       <Switch1 size="large" v-model="c" value="3">asdfds</Switch1>
     </div>
     <div class="popover-test">
-      <Popover>
-        <div class="test">asdlkal</div>
+      <Popover :duration="0" placement="top">
+        <div class="test">asdlkal
+
+           <Button size="small">按钮2</Button>
+        </div>
         <Button @click="test" slot="reference" size="small">按钮2s</Button>
       </Popover>
     </div>
     <div class="tooltip-test">
-      <Tooltip tooltip-class="fff" class="afb" placement="right" content="afasd">
+      <Tooltip tooltip-class="fff" class="afb" placement="right-top" content="afasd">
         <Button @click="test2" size="small">按钮2</Button>
       </Tooltip>
       {{f1}}
@@ -93,6 +93,11 @@ html {
       <Notice  content="aa66">
         <div @click="close1">asdaf999--{{f1}}</div>
       </Notice>
+    </div>
+    <div class="modal-test">
+      <Modal>
+        asdf
+      </Modal>
     </div>
   </div>
 </template>
@@ -110,6 +115,7 @@ import Toast, { toast } from './components/toast/'
 import Popover from './components/popover/'
 import Tooltip from './components/tooltip/'
 import Notice from './components/notice/'
+import Modal from './components/modal/'
 export default {
   name: 'app',
   components: {
@@ -124,7 +130,8 @@ export default {
     Toast,
     Popover,
     Tooltip,
-    Notice
+    Notice,
+    Modal
   },
   data () {
     setInterval(() => {
