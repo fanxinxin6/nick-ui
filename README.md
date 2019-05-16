@@ -1,4 +1,6 @@
 # nick-ui
+该框架正在测试开发中，未来将提供react框架支持，
+正在开发中，具体特点细节将在beta发布时介绍。
 ## 完成进度
 1. button
 2. button-group
