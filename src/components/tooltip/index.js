@@ -9,9 +9,9 @@ export default {
     const { prefix } = Theme
     const prefixClass = `${prefix}-tooltip`
     const className = createFrameworkClass({ [prefixClass]: true }, prefix, prefixClass)
-    const { enter, leave, change, $slots, placement, openDelay, content, tooltipClass, offset, enterable = true, visible, custom } = this
+    const { enter, leave, change, $slots, trigger, placement, openDelay, content, tooltipClass, offset, enterable = true, visible, custom } = this
     return (
-      <Popover onenter={enter} onleave={leave} onchange={change} custom={custom} popoverClass={`${tooltipClass}  ${className} ${prefixClass}-enterable-${enterable}`} placement={placement} openDelay={openDelay} reference={$slots.default} offset={offset} visible={visible}>
+      <Popover trigger={trigger} onenter={enter} onleave={leave} onchange={change} custom={custom} popoverClass={`${tooltipClass}  ${className} ${prefixClass}-enterable-${enterable}`} placement={placement} openDelay={openDelay} reference={$slots.default} offset={offset} visible={visible}>
         {$slots.content || content}
       </Popover>
     )

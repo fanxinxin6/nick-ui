@@ -4,7 +4,7 @@ import { createFrameworkClass } from '../../utils/index.js'
 import Vue from 'vue'
 const Popover = Vue.extend({
   name: 'nick-popover',
-  props: ['reference', 'content', 'placement', 'visible', 'openDelay', 'custom', 'popoverClass', 'offset', 'autoPosition'],
+  props: ['reference', 'trigger', 'content', 'placement', 'visible', 'openDelay', 'custom', 'popoverClass', 'offset', 'autoPosition'],
   data () {
     return {
       isEnter: false,
@@ -17,12 +17,13 @@ const Popover = Vue.extend({
   render () {
     const { prefix } = Theme
     const prefixClass = `${prefix}-popover`
-    const { custom, visible, isEnter, popoverClass, isReference, placementClass, isLeave } = this
+    const { custom, visible, trigger, enter, leave, isEnter, popoverClass, isReference, placementClass, isLeave } = this
     const reference = isReference ? 'reference' : 'self'
     const className = createFrameworkClass({ [prefixClass]: true, custom, visible, enter: isEnter, leave: isLeave, [`leave-${reference}`]: !isEnter }, prefix, prefixClass)
+    this.prefixClass = prefixClass
     this.$nextTick(this.position)
     return visible ? (
-      <div onmouseenter={this.enter} onmouseleave={this.leave} ref="popover" class={`${className} ${prefix}-${custom}-currentColor ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
+      <div onmouseenter={enter} onmouseleave={trigger === 'hover' ? leave : function () {}} ref="popover" class={`${className} ${prefix}-${custom}-currentColor ${popoverClass} ${placementClass}-${isEnter ? 'enter' : 'leave'}`}>
         <div ref="wrapper" class={`${prefixClass}-wrapper`}>
           {this.content.default}
         </div>
@@ -40,15 +41,17 @@ const Popover = Vue.extend({
       this.isLeave = false
       this.isReference = isReference
       this.createPopover()
-      if (openDelay) {
-        setTimeout(() => {
-          if (!this.isLeave) {
-            this.isEnter = true
-          }
-        }, openDelay)
-      } else {
-        this.isEnter = true
-      }
+      setTimeout(() => {
+        if (openDelay) {
+          setTimeout(() => {
+            if (!this.isLeave) {
+              this.isEnter = true
+            }
+          }, openDelay)
+        } else {
+          this.isEnter = true
+        }
+      }, 0)
     },
     leave (event, isReference = false) {
       this.isReference = isReference
@@ -83,11 +86,11 @@ const Popover = Vue.extend({
     position () {
       const html = document.documentElement
       const body = document.body
-      const { popover } = this.$refs
-      const { reference, placement = 'center', offset = {}, autoPosition } = this
+      const { popover, wrapper } = this.$refs
+      const { reference, placement = 'center', prefixClass, offset = {}, autoPosition } = this
       const { x: offsetX, y: offsetY } = offset
       const { offsetWidth, offsetHeight, style } = popover
-      const { scrollWidth, scrollHeight, clientHeight } = html
+      const { scrollWidth, scrollHeight } = html
       const scrollTop = body.scrollTop || html.scrollTop
       const scrollLeft = body.scrollLeft || html.scrollLeft
       const rect = reference.getBoundingClientRect()
@@ -105,10 +108,9 @@ const Popover = Vue.extend({
       const hCenter = left + ((width - offsetWidth) / 2)
       const vTop = top - offsetHeight
       const vCenter = top + ((height - offsetHeight) / 2)
-      const vBottom = clientHeight - bottom
+      const vBottom = bottom
       const placementArr = placement.toLowerCase().split('-')
       const positionMap = { left: hLeft, right: hRight, top: vTop, bottom: vBottom }
-      const isBottom = /bottom/.test(placement)
       let xIndex = placementArr.findIndex(value => /(left|right)/.test(value))
       let yIndex = placementArr.findIndex(value => /(top|bottom)/.test(value))
       let x = positionMap[placementArr[xIndex]] || hCenter
@@ -119,16 +121,12 @@ const Popover = Vue.extend({
       }
       const horizontal = x === hLeft ? 'left' : x === hCenter ? 'center' : 'right'
       const vertical = y === vTop ? 'top' : x === vCenter ? 'center' : 'bottom'
-      this.placementClass = `${horizontal}-${vertical}`
+      this.placementClass = `${prefixClass}-${vertical} ${prefixClass}-${horizontal}-${vertical}`
       x += parseInt(offsetX) || 0
       y += parseInt(offsetY) || 0
-      if (isBottom) {
-        style.left = `${x}px`
-        style.bottom = `${y}px`
-      } else {
-        style.left = `${x}px`
-        style.top = `${y}px`
-      }
+      style.left = `${x}px`
+      style.top = `${y}px`
+      console.log(wrapper.offsetHeight)
     }
   }
 })
@@ -158,7 +156,13 @@ export default {
     },
     reference: {
       default: null
+    },
+    trigger: {
+      default: 'hover'
     }
+  },
+  destroyed () {
+    document.removeEventListener('click', this.click)
   },
   render () {
     const { prefix } = Theme
@@ -172,7 +176,7 @@ export default {
   },
   mounted () {
     const { reference } = this.$refs
-    const { $slots, placement, custom, openDelay, visible, popoverClass, offset } = this
+    const { $slots, placement, custom, openDelay, visible, popoverClass, offset, trigger } = this
     const popover = new Popover({
       propsData: {
         reference,
@@ -182,7 +186,8 @@ export default {
         openDelay,
         visible,
         popoverClass,
-        offset
+        offset,
+        trigger
       },
       methods: {
         onEnter: () => {
@@ -194,17 +199,50 @@ export default {
       }
     })
     popover.$mount()
+    document.addEventListener('click', this.click)
     this.popover = popover
   },
   methods: {
-    enter (event) {
+    click (event) {
       if (this.visible) {
-        this.popover.enter(event, true)
+        const { popover, trigger } = this
+        if (trigger !== 'click') return
+        const { $el } = popover
+        const { reference } = this.$refs
+        let { target } = event
+        let isReference = false
+        let isPopover = false
+        while (target) {
+          if (target === reference) {
+            isReference = true
+            break
+          }
+          if (target === $el) {
+            isPopover = true
+            break
+          }
+          target = target.parentNode
+        }
+        if (isReference) {
+          const { isEnter } = popover
+          popover[isEnter ? 'leave' : 'enter'](event, true)
+        } else if (!isPopover) {
+          popover.leave(event)
+        }
+      }
+    },
+    enter (event) {
+      const { visible, trigger, popover } = this
+      if (trigger === 'click') return
+      if (visible) {
+        popover.enter(event, true)
       }
     },
     leave (event) {
-      if (this.visible) {
-        this.popover.leave(event, true)
+      const { visible, trigger, popover } = this
+      if (trigger === 'click') return
+      if (visible) {
+        popover.leave(event, true)
       }
     }
   }

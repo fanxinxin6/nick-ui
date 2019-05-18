@@ -1,5 +1,6 @@
 <style>
-html,body{
+html,
+body {
   height: 100%;
 }
 .nick-scroll {
@@ -10,6 +11,28 @@ html,body{
   width: 50px;
   background: pink;
   border: 2px solid blue;
+}
+.test1 {
+  position: absolute;
+  left: 50%;
+  top: 50px;
+  border: 2px solid red;
+}
+  .test2 {
+    position: absolute;
+    width: 200px;
+    background: pink;
+    animation: a 2s  both;
+    bottom: 0;
+  }
+
+@keyframes a{
+  0%{
+    height: 0;
+  }
+  100%{
+    height: 200px;
+  }
 }
 .ttf {
   width: 350px;
@@ -71,33 +94,34 @@ html,body{
     </div>
     <div class="popover-test">
       <Popover :duration="0" placement="top">
-        <div class="test">asdlkal
-
-           <Button size="small">按钮2</Button>
+        <div class="test">
+          asdlkal
+          <Button size="small">按钮2</Button>
         </div>
         <Button @click="test" slot="reference" size="small">按钮2s</Button>
       </Popover>
     </div>
     <div class="tooltip-test">
-      <Tooltip tooltip-class="fff" class="afb" placement="right-top" content="afasd">
-        <Button @click="test2" size="small">按钮2</Button>
+      <Tooltip tooltip-class="fff" class="afb" placement="right-bottom" trigger="click" content="afasd">
+        <Button @click="test2" size="small">按钮662</Button>
       </Tooltip>
       {{f1}}
     </div>
     <div class="toast-test">
       <!-- <Toast class="ttf" :inner="true" :duration="0">
         <p slot="content" a="sdf" @click="close">afffff</p>
-      </Toast> -->
+      </Toast>-->
     </div>
     <div class="notice-test">
-      <Notice  content="aa66">
+      <Notice content="aa66">
         <div @click="close1">asdaf999--{{f1}}</div>
       </Notice>
     </div>
     <div class="modal-test">
-      <Modal>
-        asdf
-      </Modal>
+      <Modal>asdf</Modal>
+    </div>
+    <div class="test1">
+      <div class="test2"></div>
     </div>
   </div>
 </template>
