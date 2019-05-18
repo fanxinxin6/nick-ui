@@ -1,14 +1,8 @@
 .popover() {
     opacity: 0;
     position: absolute;
-    transition:opacity 0.5s;
+    transition: opacity 0.5s;
     z-index: 2147483647;
-}
-
-.popover-visible() {
-    &:not(&-visible) {
-        opacity: 0 !important;
-    }
 }
 
 .popover-enter() {
@@ -33,5 +27,18 @@
 .popover-reference() {
     &-reference {
         display: inline-flex;
+    }
+}
+
+.popover-wrapper() {
+    &-bottom {
+        .@{prefix}-popover-wrapper {
+            bottom: 0;
+        }
+    }
+
+    &-wrapper {
+        left: 0;
+        position: absolute;
     }
 }
